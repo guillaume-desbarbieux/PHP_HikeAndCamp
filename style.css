@@ -1,0 +1,80 @@
+@font-face {
+    font-family: "Irish";
+    src: url(fonts/Irish_Grover/IrishGrover-Regular.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Kanit";
+    src: url(fonts/Kanit/Kanit-Regular.ttf) format("truetype");
+}
+
+/* * {
+    outline: 1px solid red; 
+} */
+
+:root {
+    --bs-primary-rgb: 254,234,161;
+}
+
+.navheader {
+    background-image: url('Images/background.png');
+    background-size: 35%;
+}
+.logo {
+    height: 100px;
+    margin-right: 3rem;
+}
+
+p{
+    text-align: justify;
+}
+
+* {
+    margin-top: 0;
+}
+main {
+    font-family: "Kanit";
+}
+
+#blocDescription {
+    background: linear-gradient(180deg, #FEEAA1, #FFFFFF);
+}
+.marque{
+    font-family: "Irish";
+}
+
+/* formulaires de postulations = hidden */
+#formulaire_poste_1,
+#formulaire_poste_2,
+#formulaire_poste_3,
+#formulaire_reservation,
+#confirmation_reservation {
+    display: none;
+}
+
+
+/* formulaires de postulation = visibles quand target */
+#formulaire_poste_1:target,
+#formulaire_poste_2:target,
+#formulaire_poste_3:target,
+#formulaire_reservation:target,
+#confirmation_reservation:target {
+    display: block;
+}
+
+
+/* Définir l'animation */
+
+@keyframes exempleAnimation {
+    from {
+    transform: rotate(0); /* Début de l'animation */
+    }
+    to {
+    transform: rotate(360deg); /* Fin de l'animation */
+    }
+    }
+
+    /* Appliquer l'animation à un élément */
+.roule:hover {
+     animation : exempleAnimation 0.5s infinite alternate; 
+    }

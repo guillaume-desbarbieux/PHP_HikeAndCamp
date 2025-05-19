@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hike & Camp</title>
+    <link rel="icon" type="image/x-icon" href="./Images/Logo.png">
+
+
+    <!-- Intégration bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Importation Police de caractères -->
+
+    <!-- Ligne de commande pour responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+
+<body>
+    <!-- Intégrer ici le header -->
+
+    <ul class="nav justify-content-around navheader bg-primary sticky-top align-items-center">
+        <li class="nav-item">
+            <a href="index.html"><img src="Images/Logo.png" class="img-fluid logo" alt="logo"></a>
+        </li>
+        <li class="nav-item">
+            <h1 class="marque">Hike & Camp</h1>
+        </li>
+        <li class="nav-item d-flex flex-row">
+            <a class="nav-link fs-3 text-dark" href="./equipe.html">Equipe</a>
+            <a class="nav-link fs-3 text-dark" href="./contact.html">Contact</a>
+            <a class="nav-link fs-3 text-dark" href="./catalogue.html">Catalogue</a>
+
+        </li>
+
+    </ul>
+    <main id="blocDescription" class="position-relative">
+
+        <h1 class="text-center">Porte-avion Charles de Gaulle - 12m</h1>
+        <h4 class="text-center">Actuellement : Détroit de Messine, Méditerrannée</h4>
+
+
+        <!-- Section Prix, avis et boutons-->
+        <section class="container">
+            <div class="row g-0 m-1 h-100">
+                <div class="col-xl-4">
+                    <h4 class="text-center">150.000€/Nuit</h4>
+                </div>
+                <div class="col-xl-4 mb-2 d-flex justify-content-center">
+                    <a href="#formulaire_reservation" class="btn btn-success m-auto" role="button">Reserver</a>
+                </div>
+                <div class="col-xl-4">
+                    <h4 class="text-center">⭐⭐⭐⭐⭐⭐⭐</h4>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Section photo et carte -->
+        <section class="container">
+            <div class="row g-4">
+                <div class="col-xl-6">
+                      <div class="ratio ratio-4x3">
+                    <img class="w-100 border border-warning border-3 rounded-2" src="./Images/lieux/porteavion.jpg"
+                        alt="Cabane du Roybon">
+                      </div>
+                </div>
+
+                <div class="col-xl-6">
+                    <iframe class="w-100 h-100 border border-warning border-3 rounded-2"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12535.989265270897!2d15.626502169409127!3d38.23316960502553!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x131452fc94c7b677%3A0x75e0d4c85804c8e6!2sD%C3%A9troit%20de%20Messine!5e0!3m2!1sfr!2sfr!4v1743603018501!5m2!1sfr!2sfr"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+
+
+
+
+                </div>
+            </div>
+        </section>
+
+        <!-- section description -->
+        <section class="container my-3">
+            <p>Vivez une expérience unique en passant une nuit à la belle étoile sur le porte-avions Charles de Gaulle !
+                Perché sur le pont d’envol, face à l’immensité de l’océan, ce bivouac hors du commun vous promet une vue
+                imprenable sur l’horizon et un réveil au son des vagues.
+
+                Équipé d’un espace sécurisé pour les campeurs et d’une zone de repos avec accès à des installations
+                militaires, ce lieu de bivouac s’adresse aux aventuriers en quête d’originalité. Le vent marin et le
+                vrombissement lointain des turbines rythmeront votre nuit, tandis que le ciel dégagé offrira un
+                spectacle céleste incomparable. Une occasion unique de mêler nature et technologie dans un cadre
+                exceptionnel !
+            </p>
+        </section>
+
+        <!-- Section réservation -->
+        <div class="container position-fixed  translate-middle-x bottom-0 start-50 mb-3 ">
+            <div id="formulaire_reservation"
+                class="container border border-black border-5 rounded-5 p-1 bg-primary w-75">
+                <form class="position-relative" action="https://httpbin.org/post" method="post">
+                    <a class="btn btn-close position-absolute top-0 end-0 mt-3 me-4 border border-white border-3"
+                        href="#blocDescription" role="button"></a>
+                    <h2 class="text-center mb-4">Porte-Avion Charles de Gaulle</h2>
+
+                    <div class="row">
+                        <div class="mb-3 text-center col-12 col-xl-6">
+                            <label for="nom" class="form-label fw-bold">Nom</label>
+                            <input type="text" class="form-control" id="nom" name="nom" placeholder=" Votre nom"
+                                required>
+                        </div>
+                        <div class="mb-3 text-center col-12 col-xl-6">
+                            <label for="mail" class="form-label fw-bold">Mail</label>
+                            <input type="Email" class="form-control" id="mail" name="mail" placeholder=" Votre mail"
+                                required>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="mb-3 text-center col">
+                            <label for="start" class="form-label fw-bold">Date d'arrivée</label>
+                            <input type="date" class="form-control" id="start" name="start" required>
+                        </div>
+                        <div class="mb-3 text-center col">
+                            <label for="end" class="form-label fw-bold">Date de départ</label>
+                            <input type="date" class="form-control" id="end" name="end" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-12 col-lg-6">
+                            <p class="text-start fw-bold">Options</p>
+                            <div class="form-check text-start ">
+                                <input class="form-check-input" type="checkbox" name="option1" id="option1">
+                                <label class="form-check-label" for="option1">
+                                    Panier de produits régionaux
+                                </label>
+                            </div>
+                            <div class="form-check text-start">
+                                <input class="form-check-input" type="checkbox" name="option2" id="option2">
+                                <label class="form-check-label" for="option2">
+                                    Minibar All-inclusive
+                                </label>
+                            </div>
+                            <div class="form-check text-start">
+                                <input class="form-check-input" type="checkbox" name="option3" id="option3">
+                                <label class="form-check-label" for="option2">
+                                    Feu d'artifice
+                                </label>
+                            </div>
+                            <div class="form-check text-start">
+                                <input class="form-check-input" type="checkbox" name="option4" id="option3">
+                                <label class="form-check-label" for="option4">
+                                    Soirée observation des étoiles
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6">
+                            <p class="text-start fw-bold">Paiement</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paiement" value="cb" id="paiement1">
+                                <label class="form-check-label" for="paiement1">
+                                    Carte Bancaire
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paiement" value="crypto"
+                                    id="paiement2" checked>
+                                <label class="form-check-label" for="paiement2">
+                                    Cryptomonnaie
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paiement" value="kinder"
+                                    id="paiement3">
+                                <label class="form-check-label" for="paiement3">
+                                    Kinder Schokobons
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="container text-center">
+                        <button type="reset" class="btn btn-danger">Effacer</button>
+                        <button type="submit" class="btn btn-success">Payer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- footer -->
+    <footer class="container-fluid mt-5 p-5 bg-warning-subtle">
+        <div class="row">
+            <div class="row">
+                <h2 class="fs-1">Contact</h2>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-xl-4">
+                    <h3 class="fs-5">10 Rue des Chevaliers 26000 Valence</h3>
+                    <a href="mailto:hikeandcamp@entreprise.fr" class="link-dark fs-5 link-underline-opacity-0">Mail:
+                        hikeandcamp@entreprise.fr</a>
+                </div>
+                <div class="col-12 col-xl-4">
+                    <div class="d-flex row justify-content-center">
+                        <a href="" class="col-3 col-xl-2" role="button"><img src="./Images/appstore.png" class="img-fluid" alt="logo-appstore" ></a>
+                        <a href="" class="col-3 col-xl-2" role="button"><img src="./Images/playstore.png" class="img-fluid" alt="logo_playstore"></a>
+                    </div>
+                </div>
+
+                <div class="col-12 col-xl-4">
+                    <h2 class="fs-5">Suivez Nous:</h2>
+                    <div class="row">
+                        <a class="col-3 col-xl-2 " id="logo_insta" href="https://www.instagram.com/"><img
+                                class="img-fluid" src="Images/instagram.png" alt="logo instagram"
+                                title="logo instagram"></a>
+                        <a class="col-3 col-xl-2" id="logo_face" href="https://www.facebook.com"><img class="img-fluid"
+                                src="Images/facebook.png" alt="logo facebook" title="logo facebook"></a>
+                        <a class="col-3 col-xl-2" id="logo_twit" href="https://x.com"><img class="img-fluid"
+                                src="Images/twitter.png" alt="logo twitter" title="logo twitter"></a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </footer>
+
+</body>
+
+</html>

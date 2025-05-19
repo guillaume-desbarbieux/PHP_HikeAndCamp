@@ -1,0 +1,17 @@
+H1 = 3em
+H2 = 2em
+h3 = 1.5em
+
+text = 1em
+
+#CDDD36
+
+@font-face {
+    font-family: "Irish";
+    src: url(/fonts/Irish_Grover/IrishGrover-Regular.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Kanit";
+    src: url(/fonts/Kanit/Kanit-Regular.ttf) format("truetype");
+}
