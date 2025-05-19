@@ -1,2 +1,2 @@
-# HTML-CSS_Site-entreprise
-Template à fork pour le projet site entreprise, module HTML/CSS
+# PHP Hike and Camp
+Portage de Hike And Camp en PHP
