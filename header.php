@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
 
     <?php
-    $title = "Produit 1";
-    echo    "
+        echo    "
+            <meta name='description' content=$meta_description>
             <title>$title</title>
             ";
     ?>
