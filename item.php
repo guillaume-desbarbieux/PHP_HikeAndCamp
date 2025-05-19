@@ -3,8 +3,8 @@
 
     <?php
     echo    "
-                <h1 class='text-center'>$titre_item</h1>
-                <h4 class='text-center'>$lieu_item</h4>
+                <h1 class='text-center'>$item[titre]</h1>
+                <h4 class='text-center'>$item[lieu]</h4>
             ";
     ?>
 
@@ -15,7 +15,7 @@
 
                 <?php
                 echo   "
-                            <h4 class='text-center'>$prix_item €/Nuit</h4>
+                            <h4 class='text-center'>$item[prix] €/Nuit</h4>
                         ";
                 ?>
 
@@ -26,7 +26,7 @@
             <div class="col-xl-4">
                 <?php
                 echo   "
-                            <h4 class='text-center'>$note_item</h4>
+                            <h4 class='text-center'>$item[note]</h4>
                         ";
                 ?>
             </div>
@@ -41,7 +41,7 @@
                 <div class="ratio ratio-4x3">
                     <?php
                     echo    "
-                                <img class='w-100 border border-warning border-3 rounded-2' src=$image_item alt=$description_image_item>
+                                <img class='w-100 border border-warning border-3 rounded-2' src=$item[image][url] alt=$item[image][description]>
                             ";
                     ?>
                 </div>
@@ -50,7 +50,7 @@
             <div class="col-xl-6">
                 <?php
                 echo    "
-                            <iframe class='w-100 h-100 border border-warning border-3 rounded-2' src=$carte_item
+                            <iframe class='w-100 h-100 border border-warning border-3 rounded-2' src=$item[carte]
                             allowfullscreen='' loading='lazy' referrerpolicy='no-referrer-when-downgrade'></iframe>
                          ";
                 ?>
@@ -62,7 +62,7 @@
     <section class="container my-3">
         <?php
         echo    "
-                    <p>$description_item</p>
+                    <p>$item[description}</p>
                 ";
         ?>
     </section>
@@ -76,7 +76,7 @@
                     role="button"></a>
                     <?php
                     echo    "
-                                    <h2 class='text-center mb-4'>$titre_item</h2>
+                                    <h2 class='text-center mb-4'>$item[titre]</h2>
                             ";
                     ?>
 
