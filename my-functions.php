@@ -1,5 +1,10 @@
 <?php
-function formatPrice(int $prix) {
-echo ($prix/100)."€";
+function formatPrice(int $price) {
+echo ($price/100)."€";
 }
+
+function priceExcludingVAT(int $price) {
+return formatPrice(100*$price/120);
+}
+
 ?>
