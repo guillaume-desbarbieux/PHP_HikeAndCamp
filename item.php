@@ -9,7 +9,7 @@
     <section class="container">
         <div class="row g-0 m-1 h-100">
             <div class="col-xl-4">
-                <h4 class="text-center"><?php echo $item["prix"] ?> €/Nuit</h4>
+                <h4 class="text-center"><?php formatPrice($item["prix"]) ?>/Nuit</h4>
             </div>
             <div class="col-xl-4 mb-2 d-flex justify-content-center">
                 <a href="#formulaire_reservation" class="btn btn-success m-auto" role="button">Réserver</a>

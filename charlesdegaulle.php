@@ -1,5 +1,6 @@
 <?php
 include 'multidimensional-catalog.php';
+include 'my-functions.php';
 
 $item = $products["charlesdegaulle"];
 

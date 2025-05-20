@@ -10,7 +10,7 @@
             <div class="col-4 d-flex flex-column align-items-center">
                 <h3 class="row fs-4"><?php echo $item["titre"] ?></h3>
                 <h4 class="row fs-6"><?php echo $item["note"] ?></h4>
-                <h4 class="row fs-6"><?php echo $item["prix"] ?></h4>
+                <h4 class="row fs-6"><?php formatPrice($item["prix"]); ?></h4>
                 <div class="row d-flex m-1 w-100">
                     <a href="#formulaire_reservation" class="btn btn-success m-auto" role="button">Réserver</a>
                 </div>
