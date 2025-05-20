@@ -11,7 +11,8 @@ include 'header.php';
 ?>
 
 <main id="ancre">
-    <div class="position-fixed z-3  m-0 translate-middle-x start-50 w-75 mb-3">
+    <!-- Ancien formulaire de réservation -->
+    <!-- <div class="position-fixed z-3  m-0 translate-middle-x start-50 w-75 mb-3">
         <form id="formulaire_reservation" method="post" action="https://httpbin.org/post et" class="bg-primary p-2 border border-black border-5 rounded-5">
             <a href="#ancre" role="button" class="btn btn-close position-absolute end-0 me-3"></a>
             <div class="row justify-content-around">
@@ -43,20 +44,19 @@ include 'header.php';
                 </div>
             </div>
         </form>
-    </div>
+    </div> -->
 
 
     <!-- Nos produits -->
     <div id="blocDescription">
-        <div>
+        <div class="row justify-content-center">
             <h1 class="ms-4">Nos meilleurs produits</h1>
+            <?php
+            foreach ($products as $item) {
+                include 'item_catalogue.php';
+            }
+            ?>
         </div>
-        <?php
-
-        foreach ($products as $item) {
-            include 'item_catalogue.php';
-        }
-        ?>
     </div>
 </main>
 
