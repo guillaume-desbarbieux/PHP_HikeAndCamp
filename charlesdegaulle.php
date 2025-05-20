@@ -1,5 +1,5 @@
 <?php
-include 'catalog-with-keys.php';
+include 'multidimensional-catalog.php';
 
 $item = products["charlesdegaulle"];
 
