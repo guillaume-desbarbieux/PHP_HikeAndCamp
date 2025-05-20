@@ -8,8 +8,8 @@
 
     <?php
         echo    "
-            <meta name='description' content=$meta_description>
-            <title>$title</title>
+            <meta name='description' content=$item[meta_description]>
+            <title>$item[title]</title>
             ";
     ?>
 
