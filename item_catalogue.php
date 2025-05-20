@@ -22,26 +22,6 @@
                 <label for="nights">Nombre de nuits :</label>
                 <input type="number" id="nights" name=<?= $item["name"] ?> min="1" max="10" required />
 
-                <fieldset>
-                    <label>Moyen de transport</label>
-
-                    <div>
-                        <input type="radio" id="Jet" name="transport" value="jet" checked />
-                        <label for="jet">Jet privé</label>
-                    </div>
-
-                    <div>
-                        <input type="radio" id="Taxi" name="transport" value="taxi" />
-                        <label for="Taxi">Taxi</label>
-                    </div>
-
-                    <div>
-                        <input type="radio" id="Marche" name="transport" value="marche" />
-                        <label for="Marche">Marche à pied</label>
-                    </div>
-                </fieldset>
-
-
                 <div class="row d-flex m-1 w-100">
                     <input type="submit" class="btn btn-success m-auto" name="submit" value="Ajouter au panier">
                 </div>
