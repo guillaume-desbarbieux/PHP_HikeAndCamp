@@ -18,14 +18,18 @@
             <div class="row d-flex m-1 w-100">
                 <a href="<?php echo $item["page"] ?>" class='btn btn-outline-success m-auto' role='button'>Voir les détails</a>
             </div>
-            <form method="post" action="cart.php">
-                <label for="nights">Nombre de nuits :</label>
-                <input type="number" id="nights" name=<?= $item["name"] ?> min="1" max="10" required />
 
-                <div class="row d-flex m-1 w-100">
-                    <input type="submit" class="btn btn-success m-auto" name="submit" value="Ajouter au panier">
-                </div>
-            </form>
+            <label for="nights">Nombre de nuits :</label>
+            <input type="number" id="nights" name=<?= $item["name"].["night"] ?> min="1" max="10"/>
+            <label for="transport">Moyen de transport :</label>
+            <select name=<?php $item["name"].["transport"] ?>>
+                <option value="">--Please choose an option--</option>
+                <option value="jet">Jet privé</option>
+                <option value="taxi">Taxi</option>
+                <option value="marche">Marche</option>
+            </select>
+
+
 
         </div>
     </div>

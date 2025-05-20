@@ -23,17 +23,7 @@ $total = $price + $livraison;
              <h6 class="row fs-6">Prix HT :<?php formatPrice($price - $TVA); ?></h6>
              <h6 class="row fs-6">TVA :<?php formatPrice($TVA); ?></h6>
 
-
-             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                 <select name="transport" id="transport">
-                     <option value="">--Please choose an option--</option>
-                     <option value="jet">Jet privé</option>
-                     <option value="taxi">Taxi</option>
-                     <option value="marche">Marche</option>
-                 </select>
-                 <input type="submit" class="btn btn-success m-auto" name="submit" value="Valider">
-             </form>
-
+             
              <h6 class="row fs-6">Transport :<?php formatPrice($livraison); ?></h6>
              <h6 class="row fs-6">Total :<?php formatPrice($total); ?></h6>
 

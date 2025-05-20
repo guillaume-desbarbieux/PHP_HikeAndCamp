@@ -51,11 +51,16 @@ include 'header.php';
     <div id="blocDescription">
         <div class="row justify-content-center">
             <h1 class="ms-4">Nos meilleurs produits</h1>
-            <?php
-            foreach ($products as $item) {
-                include 'item_catalogue.php';
-            }
-            ?>
+            <form method="post" action="cart.php">
+                <?php
+                foreach ($products as $item) {
+                    include 'item_catalogue.php';
+                }
+                ?>
+                <div class="row d-flex m-1 w-100">
+                    <input type="submit" class="btn btn-success m-auto" name="submit" value="Ajouter au panier">
+                </div>
+            </form>
         </div>
     </div>
 </main>
