@@ -4,19 +4,19 @@ function formatPrice(int $price)
     echo ($price / 100) . "€";
 }
 
-function priceExcludingVAT(int $price, int $discount = 0)
+function priceExcludingVAT(int $price)
 {
-    return formatPrice((100 - $discount) * $price / 120);
+    return ($price * 0.8);
 }
 
-function priceVAT(int $price, int $discount = 0)
+function priceVAT(int $price)
 {
-    return formatPrice((100 - $discount) * $price * 0.002);
+    return ($price * 0.2);
 }
 
 function discountedPrice(int $price, int $discount = 0)
 {
-    return formatPrice((100 - $discount) * $price / 100);
+    return ((1 - $discount/100) * $price);
 }
 
 function test_input($data)

@@ -9,13 +9,14 @@
          <div class="col-4 d-flex flex-column align-items-center">
              <h3 class="row fs-4"><?php echo $item["title"] ?></h3>
              <h4 class="row fs-6"><?php echo $item["note"] ?></h4>
+             <h4 class="row fs-6"><?php formatPrice(discountedPrice($item["prix"], $item["discount"])); ?>/nuit</h4>
              <a href="<?php echo $item["page"] ?>" class='btn btn-outline-success m-auto' role='button'>Voir les détails</a>
 
              <h3 class="row fs-6">Pour <?= $night ?> nuits</h3>
-             <h3 class="row fs-6">Total :<?php discountedPrice($total, $item["discount"]); ?></h3>
-             <h6 class="row fs-6">Prix HT :<?php priceExcludingVAT($price, $item["discount"]); ?></h6>
-             <h6 class="row fs-6">TVA :<?php priceVAT($price, $item["discount"]); ?></h6>
-             <h6 class="row fs-6">Transport :<?php formatPrice($livraison); ?></h6>
+             <h3 class="row fs-6">Total :<?php formatPrice($total) ?></h3>
+             <h6 class="row fs-6">Prix HT :<?php formatPrice($total-$TVA); ?></h6>
+             <h6 class="row fs-6">TVA :<?php formatPrice($TVA); ?></h6>
+             <h6 class="row fs-6">Transport (<?= $_POST["transport"] ?>) :<?php formatPrice($livraison); ?></h6>
              
 
          </div>

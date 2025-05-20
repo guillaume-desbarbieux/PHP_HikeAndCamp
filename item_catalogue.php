@@ -9,8 +9,8 @@
         <div class="col-4 d-flex flex-column align-items-center">
             <h3 class="row fs-4"><?php echo $item["title"] ?></h3>
             <h4 class="row fs-6"><?php echo $item["note"] ?></h4>
-            <h4 class="row fs-6"><?php discountedPrice($item["prix"], $item["discount"]); ?> (TTC)</h4>
-            <h5 class="row fs-6"><?php priceExcludingVAT($item["prix"], $item["discount"]); ?> (HT)</h5>
+            <h4 class="row fs-6"><?php formatPrice(discountedPrice($item["prix"], $item["discount"])); ?>/nuit</h4>
+            <h5 class="row fs-6"><?php formatPrice(priceExcludingVAT($item["prix"])); ?> (HT)</h5>
             <!-- Bouton accès ancien formulaire de réservation -->
             <!-- <div class="row d-flex m-1 w-100">
                     <a href="#formulaire_reservation" class="btn btn-success m-auto" role="button">Réserver</a>

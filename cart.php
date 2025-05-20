@@ -20,8 +20,9 @@ include 'header.php';
                 if ($_POST[$item["name"]]) {
                     $night = $_POST[$item["name"]];
                     $livraison = transport_price($_POST["transport"], $item["distance"]);
-                    $price = $item["price"] * $night;
+                    $price = discountedPrice($item["prix"] * $night);
                     $total = $price + $livraison;
+                    $TVA = priceVAT($total);
                     include 'item_cart.php';
                 }
             }
