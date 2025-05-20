@@ -2,7 +2,7 @@
 include 'multidimensional-catalog.php';
 include 'my-functions.php';
 
-$item = [
+$page = [
     "title" => "Votre panier",
     "meta_description" => "Vous êtes sur le point de finaliser la réservation votre séjour de rêve !",
 ];
@@ -19,10 +19,8 @@ include 'header.php';
             foreach ($products as $item) {
                 if ($_POST[$item["name"]]) {
                     $night = $_POST[$item["name"]];
-                    $livraison = transport_price($_POST["transport"], $item["distance"]);
                     $price = discountedPrice($item["prix"] * $night);
-                    $total = $price + $livraison;
-                    $TVA = priceVAT($total);
+                    $TVA = priceVAT($price);
                     include 'item_cart.php';
                 }
             }

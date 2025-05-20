@@ -2,7 +2,7 @@
 include 'multidimensional-catalog.php';
 include 'my-functions.php';
 
-$item = [
+$page = [
     "title" => "Page catalogue de Hike & Camp",
     "meta_description" => "Choisissez votre spot idéal pour un bivouac inoubliable !",
 ];
