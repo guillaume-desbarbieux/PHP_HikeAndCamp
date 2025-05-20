@@ -19,6 +19,9 @@ include 'header.php';
             foreach ($products as $item) {
                 if ($_POST[$item["name"]]) {
                     $night = $_POST[$item["name"]];
+                    $livraison = transport_price($_POST["transport"], $item["distance"]);
+                    $price = $item["price"] * $night;
+                    $total = $price + $livraison;
                     include 'item_cart.php';
                 }
             }
