@@ -9,8 +9,8 @@
     <section class="container">
         <div class="row g-0 m-1 h-100">
             <div class="col-xl-4">
-                <h4 class="text-center"><?php formatPrice($item["prix"]) ?>/Nuit (TTC)</h4>
-                <h5 class="text-center"><?php priceExcludingVAT($item["prix"]) ?>/Nuit (HT)</h5>
+                <h4 class="text-center"><?php discountedPrice($item["prix"], $item["discount"]) ?>/Nuit (TTC)</h4>
+                <h5 class="text-center"><?php priceExcludingVAT($item["prix"], $item["discount"]) ?>/Nuit (HT)</h5>
             </div>
             <div class="col-xl-4 mb-2 d-flex justify-content-center">
                 <a href="#formulaire_reservation" class="btn btn-success m-auto" role="button">Réserver</a>
