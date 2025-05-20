@@ -1,34 +1,21 @@
 <main id="blocDescription" class="position-relative">
 
 
-    <?php
-    echo    "
-                <h1 class='text-center'>$item[titre]</h1>
-                <h4 class='text-center'>$item[lieu]</h4>
-            ";
-    ?>
+    <h1 class="text-center"><?php echo $item["titre"] ?></h1>
+    <h4 class="text-center"><?php echo $item["lieu"] ?></h4>
+
 
     <!-- Section Prix, avis et boutons-->
     <section class="container">
         <div class="row g-0 m-1 h-100">
             <div class="col-xl-4">
-
-                <?php
-                echo   "
-                            <h4 class='text-center'>$item[prix] €/Nuit</h4>
-                        ";
-                ?>
-
+                <h4 class="text-center"><?php echo $item["prix"] ?> €/Nuit</h4>
             </div>
             <div class="col-xl-4 mb-2 d-flex justify-content-center">
                 <a href="#formulaire_reservation" class="btn btn-success m-auto" role="button">Réserver</a>
             </div>
             <div class="col-xl-4">
-                <?php
-                echo   "
-                            <h4 class='text-center'>$item[note]</h4>
-                        ";
-                ?>
+                <h4 class="text-center"><?php echo $item["note"] ?></h4>
             </div>
         </div>
     </section>
@@ -39,32 +26,20 @@
         <div class="row g-4">
             <div class="col-xl-6">
                 <div class="ratio ratio-4x3">
-                    <?php
-                    echo    "
-                                <img class='w-100 border border-warning border-3 rounded-2' src=$item[image][url] alt=$item[image][description]>
-                            ";
-                    ?>
+                    <img class="w-100 border border-warning border-3 rounded-2" src=<?php echo $item["image"]["url"] ?> alt=<?php echo $item["image"]["description"] ?>>
                 </div>
             </div>
 
             <div class="col-xl-6">
-                <?php
-                echo    "
-                            <iframe class='w-100 h-100 border border-warning border-3 rounded-2' src=$item[carte]
-                            allowfullscreen='' loading='lazy' referrerpolicy='no-referrer-when-downgrade'></iframe>
-                         ";
-                ?>
+                <iframe class='w-100 h-100 border border-warning border-3 rounded-2' src=<?php echo $item["carte"] ?>
+                    allowfullscreen='' loading='lazy' referrerpolicy='no-referrer-when-downgrade'></iframe>
             </div>
         </div>
     </section>
 
     <!-- section description -->
     <section class="container my-3">
-        <?php
-        echo    "
-                    <p>$item[description}</p>
-                ";
-        ?>
+        <p><?php echo $item["description"] ?></p>
     </section>
 
     <!-- Section réservation -->
@@ -74,11 +49,7 @@
             <form class="position-relative" action="https://httpbin.org/post" method="post">
                 <a class="btn btn-close position-absolute top-0 end-0 mt-3 me-4" href="#blocDescription"
                     role="button"></a>
-                    <?php
-                    echo    "
-                                    <h2 class='text-center mb-4'>$item[titre]</h2>
-                            ";
-                    ?>
+                <h2 class="text-center mb-4"><?php echo $item["titre"] ?></h2>
 
                 <div class="row">
                     <div class="mb-3 text-center col-12 col-xl-6">
