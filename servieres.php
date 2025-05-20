@@ -1,7 +1,7 @@
 <?php
 include 'multidimensional-catalog.php';
 
-$item = products["servieres"];
+$item = $products["servieres"];
 
 include 'header.php';
 include 'item.php';
