@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="col-4 d-flex flex-column align-items-center">
-            <h3 class="row fs-4"><?php echo $item["titre"] ?></h3>
+            <h3 class="row fs-4"><?php echo $item["title"] ?></h3>
             <h4 class="row fs-6"><?php echo $item["note"] ?></h4>
             <h4 class="row fs-6"><?php discountedPrice($item["prix"], $item["discount"]); ?> (TTC)</h4>
             <h5 class="row fs-6"><?php priceExcludingVAT($item["prix"], $item["discount"]); ?> (HT)</h5>
@@ -20,7 +20,7 @@
             </div>
             <form method="post" action="cart.php">
                 <label for="nights">Nombre de nuits :</label>
-                <input type="number" id="nights" name="night" min="1" max="10" required/>
+                <input type="number" id="nights" name=<?= $item["name"] ?> min="1" max="10" required/>
                 <span class="error">*<?php echo $nightErr; ?></span>
                 <div class="row d-flex m-1 w-100">
                     <input type="submit" class="btn btn-success m-auto" name="submit" value="Ajouter au panier">
