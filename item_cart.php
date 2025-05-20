@@ -9,16 +9,12 @@
          <div class="col-4 d-flex flex-column align-items-center">
              <h3 class="row fs-4"><?php echo $item["title"] ?></h3>
              <h4 class="row fs-6"><?php echo $item["note"] ?></h4>
-
+             <a href="<?php echo $item["page"] ?>" class='btn btn-outline-success m-auto' role='button'>Voir les détails</a>
 
              <h3 class="row fs-6">Pour <?= $night ?> nuits</h3>
              <h3 class="row fs-6"><?php discountedPrice($night * $item["prix"], $item["discount"]); ?> (TTC)</h3>
              <h6 class="row fs-6"><?php priceExcludingVAT($night * $item["prix"], $item["discount"]); ?> (HT) + <?php priceVAT($night * $item["prix"], $item["discount"]); ?> (TVA)</h6>
 
-
-
-                 <a href="<?php echo $item["page"] ?>" class='btn btn-outline-success m-auto' role='button'>Voir les détails</a>
          </div>
-
      </div>
  </div>
