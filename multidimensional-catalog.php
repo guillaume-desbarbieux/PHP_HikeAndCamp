@@ -1,6 +1,7 @@
 <?php
 $products = [
   "roybon" => [
+    "name"        =>"roybon",
     "title"        => "Cabane De Roybon",
     "meta_description"  => "Hike and Camp - Page de réservation pour la Cabane de Roybon, Villard de Lans",
     "titre"        => "Cabane de Roybon - 1450m",
@@ -28,6 +29,7 @@ $products = [
 
 
   "servieres" => [
+    "name"        =>"servieres",
     "title"        => "Lac de Servières",
     "meta_description"  => "Hike and Camp - Page de réservation pour le lac de Servières, Orcival",
     "titre"        => "Lac de Servières - 1200m",
@@ -52,6 +54,7 @@ $products = [
 
 
   "charlesdegaulle" => [
+    "name"        =>"charlesdegaulle",
     "title"        => "Porte-avion Charles de Gaulle",
     "meta_description"  => "Hike and Camp - Page de réservation pour le porte-avion Charles de Gaulle, détroit de Messine - Mer Méditerrannée",
     "titre"        => "Porte-avion Charles de Gaulle - 12m",
