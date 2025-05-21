@@ -16,19 +16,15 @@ include './Templates/header.php';
         <div class="row justify-content-center">
             <h1 class="ms-4">Votre panier</h1>
             <?php
-            var_dump ($_POST);
             foreach ($products as $item) {
-                
-                echo "\n";
-                //var_dump($item["name"]);
-                echo "\n";
-                if ($_POST[$item["name"]]) {
+                if ($_POST[$item["name"]]["night"] != "") {
                     $night = $_POST[$item["name"]]["night"];
+                    $transport = $_POST[$item["name"]]["transport"];
                     $price = discountedPrice($item["prix"] * $night);
                     $TVA = priceVAT($price);
-                    $livraison = transport_price($_POST[$item["name"]["transport"]], $item["distance"]);
+                    $livraison = transport_price($transport, $item["distance"]);
                     $total = $price + $livraison;
-                    include './Templates/item_cart.php';
+                    require './Templates/item_cart.php';
                 }
             }
             ?>
