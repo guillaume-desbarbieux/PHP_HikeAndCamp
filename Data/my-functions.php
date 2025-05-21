@@ -16,10 +16,10 @@ function priceVAT(int $price)
 
 function discountedPrice(int $price, int $discount = 0)
 {
-    return ((1 - $discount/100) * $price);
+    return ((1 - $discount / 100) * $price);
 }
 
-function test_input($data)
+function test_input(string $data)
 {
     $data = trim($data);
     $data = stripslashes($data);
@@ -27,8 +27,10 @@ function test_input($data)
     return $data;
 }
 
-function transport_price($transport, $distance)
+function transport_price(string $transport, int $distance)
 {
+    $cout = 0;
+    
     if ($transport == "jet") {
         $cout = 10000;
     };
@@ -51,5 +53,3 @@ function transport_price($transport, $distance)
     };
     return $livraison;
 }
-
-?>
