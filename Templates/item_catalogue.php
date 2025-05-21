@@ -3,7 +3,7 @@
         <div class="col-8 d-flex justify-content-center align-items-center ">
             <div class="ratio ratio-4x3 m-2">
                 <img class='img-fluid object-fit-cover border border-warning border-3 rounded-2'
-                    src=<?php echo $item["image"]["url"] ?> alt=<?php echo $item["image"]["description"] ?> title=<?php echo $item["titre"] ?>>
+                    src=<?= $item["image"]["url"] ?> alt=<?= $item["image"]["description"] ?> title=<?= $item["titre"] ?>>
             </div>
         </div>
         <div class="col-4 d-flex flex-column align-items-center">
@@ -16,13 +16,13 @@
                     <a href="#formulaire_reservation" class="btn btn-success m-auto" role="button">Réserver</a>
                 </div> -->
             <div class="row d-flex m-1 w-100">
-                <a href="<?php echo $item["page"] ?>" class='btn btn-outline-success m-auto' role='button'>Voir les détails</a>
+                <a href="<?= $item["page"] ?>" class='btn btn-outline-success m-auto' role='button'>Voir les détails</a>
             </div>
 
             <label for="nights">Nombre de nuits :</label>
-            <input type="number" id="nights" name=<?= $item["name"].["night"] ?> min="1" max="10"/>
+            <input type="number" id="nights" name="<?= $item["name"] . "['night']" ?>" min="1" max="10" />
             <label for="transport">Moyen de transport :</label>
-            <select name=<?php $item["name"].["transport"] ?>>
+            <select name="<?= $item["name"] . "['transport']" ?>">
                 <option value="">--Please choose an option--</option>
                 <option value="jet">Jet privé</option>
                 <option value="taxi">Taxi</option>

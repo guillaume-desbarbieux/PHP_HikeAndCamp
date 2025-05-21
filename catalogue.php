@@ -1,13 +1,13 @@
 <?php
-include 'multidimensional-catalog.php';
-include 'my-functions.php';
+include './Data/multidimensional-catalog.php';
+include './Data/my-functions.php';
 
 $page = [
     "title" => "Page catalogue de Hike & Camp",
     "meta_description" => "Choisissez votre spot idéal pour un bivouac inoubliable !",
 ];
 
-include 'header.php';
+include './Templates/header.php';
 ?>
 
 <main id="ancre">
@@ -50,16 +50,19 @@ include 'header.php';
     <!-- Nos produits -->
     <div id="blocDescription">
         <div class="row justify-content-center">
-            <h1 class="ms-4">Nos meilleurs produits</h1>
+            <h1 class="ms-4 text-center">Nos meilleurs produits</h1>
             <form method="post" action="cart.php">
-                <?php
-                foreach ($products as $item) {
-                    include 'item_catalogue.php';
-                }
-                ?>
-                <div class="row d-flex m-1 w-100">
+                <div class="row d-flex m-auto w-25 justify-content-center">
                     <input type="submit" class="btn btn-success m-auto" name="submit" value="Ajouter au panier">
                 </div>
+                <div class="row justify-content-center">
+                <?php
+                foreach ($products as $item) {
+                    include './Templates/item_catalogue.php';
+                }
+                ?>
+                </div>
+
             </form>
         </div>
     </div>
@@ -67,6 +70,6 @@ include 'header.php';
 
 <?php
 
-include 'footer.php';
+include './Templates/footer.php';
 
 ?>
