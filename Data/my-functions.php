@@ -1,28 +1,28 @@
 <?php
-function formatPrice(int $price)
+function formatPrice(int $price): string
 {
     $price /= 100;
-    $centimes = $price%1 == 0 ? 0:2;
+    $centimes = $price % 1 == 0 ? 0 : 2;
 
-    echo number_format($price, $centimes, ",", " ") . "€";
+    return number_format($price, $centimes, ",", " ") . "€";
 }
 
-function priceExcludingVAT(int $price)
+function priceExcludingVAT(int $price): float
 {
     return ($price * 0.8);
 }
 
-function priceVAT(int $price)
+function priceVAT(int $price): float
 {
     return ($price * 0.2);
 }
 
-function discountedPrice(int $price, int $discount = 0)
+function discountedPrice(int $price, int $discount = 0): int
 {
     return ((1 - $discount / 100) * $price);
 }
 
-function test_input(string $data)
+function testInput(string $data): string
 {
     $data = trim($data);
     $data = stripslashes($data);
@@ -30,7 +30,8 @@ function test_input(string $data)
     return $data;
 }
 
-function transport_price(string $transport, int $distance)
+
+function priceTransport(string $transport, int $distance): int
 {
     $cout = 0;
 
@@ -55,4 +56,34 @@ function transport_price(string $transport, int $distance)
         $livraison = 150 * $cout;
     };
     return $livraison;
+}
+
+
+function emptyCart(): void
+{
+    $_SESSION["cart"] = NULL;
+}
+
+function invoiceCommand(string $item, int $quantity, string $deliveryMode): array
+{
+    include './Data/catalog-with-keys.php';
+
+    foreach ($products as $article) {
+        if ($article["name"] == $item) {
+            $invoice = [
+                "name" => $article["name"],
+                "unitPrice" => $article["price"],
+                "quantity" => $quantity,
+                "deliveryMode" => $deliveryMode,
+                "groupPrice" => $unitPrice * $quantity,
+                "discountPrice" => discountedPrice($invoice["groupPrice"], $article["discount"]),
+                "excludingTVA" => priceExcludingVAT($invoice["discountPrice"]),
+                "TVA" => $invoice["discountPrice"] - $invoice["excludingTVA"],
+                "deliveryPrice" => priceTransport($transport, $article["distance"]),
+                "total" => $invoice["discountPrice"] + $invoice["deliveryPrice"],
+            ];
+            return $invoice;
+        }
+    }
+    return [];
 }

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include './Data/multidimensional-catalog.php';
 include './Data/my-functions.php';
 
@@ -8,6 +9,10 @@ $page = [
 ];
 
 include './Templates/header.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    emptyCart();
+}
 ?>
 
 
@@ -15,26 +20,34 @@ include './Templates/header.php';
     <div id="blocDescription">
         <div class="row justify-content-center">
             <h1 class="ms-4 text-center">Votre panier</h1>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                <div class="row d-flex m-auto w-25 justify-content-center">
+                    <input type="submit" class="btn btn-danger m-auto" name="submit" value="Vider le panier">
+                </div>
+            </form>
             <?php
-            $facture = 0;
-            foreach ($products as $item) {
-                if ($_POST[$item["name"]]["night"] != "") {
-                    $night = $_POST[$item["name"]]["night"];
-                    $transport = $_POST[$item["name"]]["transport"];
-                    $price = discountedPrice($item["prix"] * $night);
-                    $TVA = priceVAT($price);
-                    $livraison = transport_price($transport, $item["distance"]);
-                    $total = $price + $livraison;
-                    $facture += $total;
+            // mise à jour du panier
+            foreach ($_POST as $item) {
+                if ($item["night"] != "") {
+                    $_SESSION["cart"][$item["name"]]["quantity"] += $item["night"];
+                    $_SESSION["cart"][$item["name"]]["transport"] = $item["transport"];
+                }
+            }
+
+            // affichage du panier
+            foreach ($_SESSION["cart"] as $article) {  
+                if ($item > 0) {
+                    $invoice = invoiceCommand("$article", $article["quantity"], $article["transport"] );
                     require './Templates/item_cart.php';
                 }
             }
-            if ($facture == 0) {
+            if (!$_SESSION["cart"]["facture"]) {
                 echo "<h2 class='text-center'>Votre panier est vide :'(</h2>";
             } else {
-                echo "<h2 class='text-center'>Votre facture totale est de ", formatPrice($facture), "</h2>";
+                echo "<h2 class='text-center'>Votre facture totale est de ", formatPrice($_SESSION["cart"]["facture"]), "</h2>";
             }
             ?>
+
         </div>
 </main>
 
