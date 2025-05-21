@@ -1,4 +1,10 @@
 <?php
+/*
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+*/
+
 session_start();
 include './Data/multidimensional-catalog.php';
 include './Data/my-functions.php';
@@ -10,41 +16,55 @@ $page = [
 
 include './Templates/header.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    emptyCart();
-}
-?>
 
+
+if ($_POST["clear"]) {
+    emptyCart();
+} else {
+    foreach ($_POST as $name => $command) {
+        if (isset($command["night"])) {
+            $_SESSION["cart"][$name]["quantity"] += (int) $command["night"];
+            $_SESSION["cart"]["$name"]["transport"] = $command["transport"];
+        }
+    }
+}
+
+?>
 
 <main id="ancre">
     <div id="blocDescription">
         <div class="row justify-content-center">
+            <?php
+            if (!$_SESSION["cart"]) {
+                echo "<div class='d-none'>";
+            }
+            ?>
             <h1 class="ms-4 text-center">Votre panier</h1>
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <form method="POST">
                 <div class="row d-flex m-auto w-25 justify-content-center">
-                    <input type="submit" class="btn btn-danger m-auto" name="submit" value="Vider le panier">
+                    <input type='submit' class='btn btn-danger m-auto' name='clear' value='Vider le panier'>
                 </div>
             </form>
             <?php
-            // mise à jour du panier
-            foreach ($_POST as $item) {
-                if ($item["night"] != "") {
-                    $_SESSION["cart"][$item["name"]]["quantity"] += $item["night"];
-                    $_SESSION["cart"][$item["name"]]["transport"] = $item["transport"];
-                }
+            if (!$_SESSION["cart"]) {
+                echo "</div>";
             }
+            ?>
 
+            <?php
             // affichage du panier
-            foreach ($_SESSION["cart"] as $article) {  
-                if ($item > 0) {
-                    $invoice = invoiceCommand("$article", $article["quantity"], $article["transport"] );
+            $facture = 0;
+            foreach ($_SESSION["cart"] as $article => $command) {
+                if ($command["quantity"] > 0) {
+                    $invoice = invoiceCommand($article, $command["quantity"], $command["transport"]);
+                    $facture += $invoice["total"];
                     require './Templates/item_cart.php';
                 }
             }
-            if (!$_SESSION["cart"]["facture"]) {
+            if ($facture == 0) {
                 echo "<h2 class='text-center'>Votre panier est vide :'(</h2>";
             } else {
-                echo "<h2 class='text-center'>Votre facture totale est de ", formatPrice($_SESSION["cart"]["facture"]), "</h2>";
+                echo "<h2 class='text-center'>Votre facture totale est de ", formatPrice($facture), "</h2>";
             }
             ?>
 

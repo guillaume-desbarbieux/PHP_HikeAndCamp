@@ -8,18 +8,18 @@
          </div>
          <div class="col-6 d-flex flex-column align-items-center">
              <h3 class="row fs-4"><?= $products[$article]["titre"] ?></h3>
-             <h4 class="row fs-6"><?php formatPrice($invoice["unitPrice"]); ?>/nuit</h4>
+             <h4 class="row fs-6"><?= formatPrice($invoice["unitPrice"]); ?>/nuit</h4>
              <h3 class="row fs-6">Pour <?= $invoice["quantity"] ?> <?= $invoice["quantity"] > 1 ? "nuits" : "nuit" ?></h3>
-             <h3 class="row fs-6">Logement :<?php formatPrice($invoice["discountPrice"]) ?></h3>
-             <h6 class="row fs-6">Prix HT :<?php formatPrice($invoice["excludingTVA"]) ?></h6>
-             <h6 class="row fs-6">TVA :<?php formatPrice($invoice["TVA"]) ?></h6>
+             <h3 class="row fs-6">Logement :<?= formatPrice($invoice["discountPrice"]) ?></h3>
+             <h6 class="row fs-6">Prix HT :<?= formatPrice($invoice["excludingTVA"]) ?></h6>
+             <h6 class="row fs-6">TVA :<?= formatPrice($invoice["TVA"]) ?></h6>
 
              <?php
                 if ($invoice["deliveryMode"]) {
                     echo "<h6 class='row fs-6'>Transport en ", $invoice["deliveryMode"], " : ", formatPrice($invoice["deliveryPrice"]), "</h6>";
                 }
                 ?>
-             <h6 class="row fs-6">Total :<?php formatPrice($invoice["total"]) ?></h6>
+             <h6 class="row fs-6">Total :<?= formatPrice($invoice["total"]) ?></h6>
 
 
          </div>

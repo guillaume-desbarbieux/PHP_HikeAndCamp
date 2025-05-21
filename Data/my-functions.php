@@ -66,21 +66,25 @@ function emptyCart(): void
 
 function invoiceCommand(string $item, int $quantity, string $deliveryMode): array
 {
-    include './Data/catalog-with-keys.php';
+    include './Data/multidimensional-catalog.php';
+    foreach ($products as $product => $detail) {
+        if ($product == $item) {
+            $groupPrice = $detail["prix"] * $quantity;
+            $discountPrice = discountedPrice($groupPrice, $detail["discount"]);
+            $excludingTVA = priceExcludingVAT($discountPrice);
+            $deliveryPrice = priceTransport($deliveryMode, $detail["distance"]);
 
-    foreach ($products as $article) {
-        if ($article["name"] == $item) {
             $invoice = [
-                "name" => $article["name"],
-                "unitPrice" => $article["price"],
+                "name" => $detail["name"],
+                "unitPrice" => $detail["prix"],
                 "quantity" => $quantity,
                 "deliveryMode" => $deliveryMode,
-                "groupPrice" => $unitPrice * $quantity,
-                "discountPrice" => discountedPrice($invoice["groupPrice"], $article["discount"]),
-                "excludingTVA" => priceExcludingVAT($invoice["discountPrice"]),
-                "TVA" => $invoice["discountPrice"] - $invoice["excludingTVA"],
-                "deliveryPrice" => priceTransport($transport, $article["distance"]),
-                "total" => $invoice["discountPrice"] + $invoice["deliveryPrice"],
+                "groupPrice" => $groupPrice,
+                "discountPrice" => $discountPrice,
+                "excludingTVA" => $excludingTVA,
+                "TVA" => $discountPrice - $excludingTVA,
+                "deliveryPrice" => $deliveryPrice,
+                "total" => $discountPrice + $deliveryPrice,
             ];
             return $invoice;
         }
