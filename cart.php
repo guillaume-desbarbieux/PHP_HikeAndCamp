@@ -29,10 +29,13 @@ include './Templates/header.php';
                     require './Templates/item_cart.php';
                 }
             }
+            if ($facture == 0) {
+                echo "<h2 class='text-center'>Votre panier est vide :'(</h2>";
+            } else {
+                echo "<h2 class='text-center'>Votre facture totale est de ", formatPrice($facture), "</h2>";
+            }
             ?>
-            <h2 class="text-center">Votre facture totale est de <?= formatPrice($facture) ?></h2>
         </div>
-    </div>
 </main>
 
 <?php

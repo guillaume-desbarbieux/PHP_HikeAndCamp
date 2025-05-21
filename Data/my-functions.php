@@ -1,7 +1,10 @@
 <?php
 function formatPrice(int $price)
 {
-    echo ($price / 100) . "€";
+    $price /= 100;
+    $centimes = $price%1 == 0 ? 0:2;
+
+    echo number_format($price, $centimes, ",", " ") . "€";
 }
 
 function priceExcludingVAT(int $price)
@@ -30,7 +33,7 @@ function test_input(string $data)
 function transport_price(string $transport, int $distance)
 {
     $cout = 0;
-    
+
     if ($transport == "jet") {
         $cout = 10000;
     };
