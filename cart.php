@@ -14,8 +14,9 @@ include './Templates/header.php';
 <main id="ancre">
     <div id="blocDescription">
         <div class="row justify-content-center">
-            <h1 class="ms-4">Votre panier</h1>
+            <h1 class="ms-4 text-center">Votre panier</h1>
             <?php
+            $facture = 0;
             foreach ($products as $item) {
                 if ($_POST[$item["name"]]["night"] != "") {
                     $night = $_POST[$item["name"]]["night"];
@@ -24,10 +25,12 @@ include './Templates/header.php';
                     $TVA = priceVAT($price);
                     $livraison = transport_price($transport, $item["distance"]);
                     $total = $price + $livraison;
+                    $facture += $total;
                     require './Templates/item_cart.php';
                 }
             }
             ?>
+            <h2 class="text-center">Votre facture totale est de <?= formatPrice($facture) ?></h2>
         </div>
     </div>
 </main>
