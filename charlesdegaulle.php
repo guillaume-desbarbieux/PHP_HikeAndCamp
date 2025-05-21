@@ -1,4 +1,5 @@
 <?php
+session_start();
 include './Data/multidimensional-catalog.php';
 include './Data/my-functions.php';
 

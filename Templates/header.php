@@ -1,5 +1,3 @@
-<?php session_start() ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -45,6 +43,7 @@
             <a class="nav-link fs-3 text-dark" href="./equipe.html">Equipe</a>
             <a class="nav-link fs-3 text-dark" href="./contact.html">Contact</a>
             <a class="nav-link fs-3 text-dark" href="./catalogue.php">Catalogue</a>
+            <a class="nav-link fs-3 text-dark" href="./cart.php">Panier</a>
 
         </li>
 
