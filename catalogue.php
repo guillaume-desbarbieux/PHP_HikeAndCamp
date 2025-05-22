@@ -5,6 +5,7 @@ $pageInfo = [
 ];
 
 require_once './Templates/header.php';
+
 ?>
 
 
@@ -48,17 +49,23 @@ require_once './Templates/header.php';
     <!-- Nos produits -->
     <div id="blocDescription">
         <div class="row justify-content-center">
-            <h1 class="ms-4 text-center">Nos meilleurs produits</h1>
-            <form method="post" action="?page=cart">
+            <h1 class="ms-4 text-center">Nos meilleures ventes</h1>
+            <form method="post">
                 <div class="row d-flex m-auto w-25 justify-content-center">
-                    <input type="submit" class="btn btn-success m-auto" name="submit" value="Ajouter au panier">
+                    <input type="submit" class="btn btn-success m-auto" name="submitCart" value="Ajouter au panier">
+                    <?php
+                    if ($_SESSION["error"]["cart"] == "empty"){
+                        $_SESSION["error"]["cart"] = NULL;
+                        echo "<h3 class='text-center bg-danger w-auto mt-1'>Rien à ajouter au panier</h3>";
+                    }                    
+                    ?>
                 </div>
                 <div class="row justify-content-center">
-                <?php
-                foreach ($products as $item) {
-                    require_once './Templates/item_catalogue.php';
-                }
-                ?>
+                    <?php
+                    foreach ($products as $item) {
+                        require './Templates/item_catalogue.php';
+                    }
+                    ?>
                 </div>
 
             </form>

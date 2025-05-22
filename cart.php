@@ -6,18 +6,6 @@ $pageInfo = [
 
 require_once './Templates/header.php';
 
-
-if ($_POST["emptyCart"]) {
-    emptyCart();
-} else {
-    foreach ($_POST as $name => $command) {
-        if (isset($command["night"])) {
-            $_SESSION["cart"][$name]["quantity"] += (int) $command["night"];
-            $_SESSION["cart"]["$name"]["transport"] = $command["transport"];
-        }
-    }
-}
-
 ?>
 
 <main id="ancre">
@@ -54,6 +42,9 @@ if ($_POST["emptyCart"]) {
                 echo "<h2 class='text-center'>Votre panier est vide :'(</h2>";
             } else {
                 echo "<h2 class='text-center'>Votre facture totale est de ", formatPrice($facture), "</h2>";
+                if ($facture > 1000000) {
+                    echo "<h2 class='text-center bg-danger w-auto'>!!  La CB va chauffer  !!</h2>";
+                }
             }
             ?>
 

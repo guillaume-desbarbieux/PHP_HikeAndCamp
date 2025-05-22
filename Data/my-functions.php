@@ -91,3 +91,13 @@ function invoiceCommand(string $item, int $quantity, string $deliveryMode): arra
     }
     return [];
 }
+
+function isCartEmpty($cart)
+{
+    include './Data/multidimensional-catalog.php';
+    foreach ($products as $name => $infos) {
+        if ($cart[$name]["night"] > 0)
+            return false;
+    }
+    return true;
+}
