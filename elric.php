@@ -1,5 +1,5 @@
 <?php
-$page = [
+$pageInfo = [
     "title" => "CV d'Elric Tourtel",
     "meta_description" => "Une véritable licorne !",
 ];

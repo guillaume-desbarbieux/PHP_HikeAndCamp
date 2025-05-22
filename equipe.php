@@ -1,5 +1,5 @@
 <?php
-$page = [
+$pageInfo = [
     "title" => "Notre équipe",
     "meta_description" => "Voici les meilleurs",
 ];

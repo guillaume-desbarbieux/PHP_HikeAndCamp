@@ -1,5 +1,5 @@
 <?php
-$page = [
+$pageInfo = [
     "title" => "Votre panier",
     "meta_description" => "Vous êtes sur le point de finaliser la réservation votre séjour de rêve !",
 ];

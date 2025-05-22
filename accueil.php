@@ -1,5 +1,5 @@
 <?php
-$page = [
+$pageInfo = [
     "title" => "Page d'Accueil de Hike & Camp",
     "meta_description" => "Vous êtes au bon endroit :)",
 ];

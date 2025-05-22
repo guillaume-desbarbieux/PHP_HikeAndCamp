@@ -1,5 +1,5 @@
 <?php
-$page = [
+$pageInfo = [
     "title" => "Page catalogue de Hike & Camp",
     "meta_description" => "Choisissez votre spot idéal pour un bivouac inoubliable !",
 ];
