@@ -4,11 +4,10 @@ $pageInfo = [
     "meta_description" => "Vous êtes sur le point de finaliser la réservation votre séjour de rêve !",
 ];
 
-include './Templates/header.php';
+require_once './Templates/header.php';
 
 
-
-if ($_POST["clear"]) {
+if ($_POST["emptyCart"]) {
     emptyCart();
 } else {
     foreach ($_POST as $name => $command) {
@@ -32,7 +31,7 @@ if ($_POST["clear"]) {
             <h1 class="ms-4 text-center">Votre panier</h1>
             <form method="POST">
                 <div class="row d-flex m-auto w-25 justify-content-center">
-                    <input type='submit' class='btn btn-danger m-auto' name='clear' value='Vider le panier'>
+                    <input type='submit' class='btn btn-danger m-auto' name='emptyCart' value='Vider le panier'>
                 </div>
             </form>
             <?php
@@ -62,5 +61,5 @@ if ($_POST["clear"]) {
 </main>
 
 <?php
-include './Templates/footer.php';
+require_once './Templates/footer.php';
 ?>

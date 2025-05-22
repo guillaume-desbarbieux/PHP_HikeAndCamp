@@ -4,7 +4,7 @@ $pageInfo = [
     "meta_description" => "Vous êtes au bon endroit :)",
 ];
 
-include './Templates/header.php';
+require_once './Templates/header.php';
 ?>
 
 
@@ -128,6 +128,6 @@ include './Templates/header.php';
 
 <?php
 
-include './Templates/footer.php';
+require_once './Templates/footer.php';
 
 ?>

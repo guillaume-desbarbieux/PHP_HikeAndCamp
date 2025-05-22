@@ -4,7 +4,7 @@ $pageInfo = [
     "meta_description" => "Choisissez votre spot idéal pour un bivouac inoubliable !",
 ];
 
-include './Templates/header.php';
+require_once './Templates/header.php';
 ?>
 
 
@@ -56,7 +56,7 @@ include './Templates/header.php';
                 <div class="row justify-content-center">
                 <?php
                 foreach ($products as $item) {
-                    include './Templates/item_catalogue.php';
+                    require_once './Templates/item_catalogue.php';
                 }
                 ?>
                 </div>
@@ -68,6 +68,6 @@ include './Templates/header.php';
 
 <?php
 
-include './Templates/footer.php';
+require_once './Templates/footer.php';
 
 ?>

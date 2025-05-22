@@ -6,17 +6,16 @@ error_reporting(E_ALL);
 */
 session_start();
 
-include './Data/multidimensional-catalog.php';
-include './Data/my-functions.php';
+require_once './Data/multidimensional-catalog.php';
+require_once './Data/my-functions.php';
 
 $page = $_GET["page"] ?? "accueil";
 
-if (array_key_exists($page, $products)) {
-
+if ($products[$page]) {
     $pageInfo = $item = $products[$page];
-    include './Templates/header.php';
-    include './Templates/item_details.php';
-    include './Templates/footer.php';
+    require_once './Templates/header.php';
+    require_once './Templates/item_details.php';
+    require_once './Templates/footer.php';
 } else {
-    include "./$page.php";
+    require_once "./$page.php";
 }

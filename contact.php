@@ -3,7 +3,7 @@ $pageInfo = [
     "title" => "Page Contact",
     "meta_description" => "Je vous écoute",
 ];
-include './Templates/header.php';
+require_once './Templates/header.php';
 ?>
 
 <div class="container border border-black border-5 rounded-5 p-1 bg-primary w-75 mt-5">
@@ -34,5 +34,5 @@ include './Templates/header.php';
 </div>
 
 <?php
-include './Templates/footer.php';
+require_once './Templates/footer.php';
 ?>

@@ -4,7 +4,7 @@ $pageInfo = [
     "meta_description" => "Une véritable licorne !",
 ];
 
-include './Templates/header.php';
+require_once './Templates/header.php';
 ?>
 <main>
     <div class="container-fluid">
@@ -138,6 +138,6 @@ include './Templates/header.php';
 </main>
 <?php
 
-include './Templates/footer.php';
+require_once './Templates/footer.php';
 
 ?>

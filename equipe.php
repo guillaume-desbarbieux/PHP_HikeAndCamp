@@ -4,7 +4,7 @@ $pageInfo = [
     "meta_description" => "Voici les meilleurs",
 ];
 
-include './Templates/header.php';
+require_once './Templates/header.php';
 ?>
 <main>
     <!-- Section présentation de l'équipe -->
@@ -232,6 +232,6 @@ include './Templates/header.php';
 
 <?php
 
-include './Templates/footer.php';
+require_once './Templates/footer.php';
 
 ?>
