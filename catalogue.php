@@ -1,8 +1,4 @@
 <?php
-session_start();
-include './Data/multidimensional-catalog.php';
-include './Data/my-functions.php';
-
 $page = [
     "title" => "Page catalogue de Hike & Camp",
     "meta_description" => "Choisissez votre spot idéal pour un bivouac inoubliable !",
@@ -10,6 +6,7 @@ $page = [
 
 include './Templates/header.php';
 ?>
+
 
 <main id="ancre">
     <!-- Ancien formulaire de réservation -->
@@ -52,7 +49,7 @@ include './Templates/header.php';
     <div id="blocDescription">
         <div class="row justify-content-center">
             <h1 class="ms-4 text-center">Nos meilleurs produits</h1>
-            <form method="post" action="cart.php">
+            <form method="post" action="?page=cart">
                 <div class="row d-flex m-auto w-25 justify-content-center">
                     <input type="submit" class="btn btn-success m-auto" name="submit" value="Ajouter au panier">
                 </div>

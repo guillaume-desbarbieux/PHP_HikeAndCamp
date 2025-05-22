@@ -8,8 +8,8 @@
 
     <?php
         echo    "
-            <meta name='description' content=$page[meta_description]>
-            <title>$page[title]</title>
+            <meta name='description' content=$pageInfo[meta_description]>
+            <title>$pageInfo[title]</title>
             ";
     ?>
 
@@ -34,16 +34,16 @@
 
     <ul class="nav justify-content-around navheader bg-primary sticky-top align-items-center">
         <li class="nav-item">
-            <a href="index.html"><img src="Images/Logo.png" class="img-fluid logo" alt="logo"></a>
+            <a href="?page=accueil"><img src="Images/Logo.png" class="img-fluid logo" alt="logo"></a>
         </li>
         <li class="nav-item">
             <h1 class="marque">Hike & Camp</h1>
         </li>
         <li class="nav-item d-flex flex-row">
-            <a class="nav-link fs-3 text-dark" href="./equipe.html">Equipe</a>
-            <a class="nav-link fs-3 text-dark" href="./contact.html">Contact</a>
-            <a class="nav-link fs-3 text-dark" href="./catalogue.php">Catalogue</a>
-            <a class="nav-link fs-3 text-dark" href="./cart.php">Panier</a>
+            <a class="nav-link fs-3 text-dark" href="?page=equipe">Equipe</a>
+            <a class="nav-link fs-3 text-dark" href="?page=contact">Contact</a>
+            <a class="nav-link fs-3 text-dark" href="?page=catalogue">Catalogue</a>
+            <a class="nav-link fs-3 text-dark" href="?page=cart">Panier</a>
 
         </li>
 
