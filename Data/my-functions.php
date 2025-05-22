@@ -92,7 +92,7 @@ function invoiceCommand(string $item, int $quantity, string $deliveryMode): arra
     return [];
 }
 
-function isCartEmpty($cart)
+function isCartEmpty(array $cart): bool
 {
     include './Data/multidimensional-catalog.php';
     foreach ($products as $name => $infos) {
@@ -100,4 +100,48 @@ function isCartEmpty($cart)
             return false;
     }
     return true;
+}
+
+function saveCart(array $cart): string
+{
+    if (isCartEmpty($cart)) {
+        $_SESSION["error"] = ["cart" => "empty"];
+        return "catalogue";
+    }
+
+    foreach ($cart as $name => $command) {
+        if (isset($command["night"])) {
+            $_SESSION["cart"][$name]["quantity"] += (int) $command["night"];
+            $_SESSION["cart"]["$name"]["transport"] = $command["transport"];
+        }
+    }
+    return "cart";
+}
+
+function handleContactForm(array $form): bool
+{
+    foreach ($form as $field => $value) {
+        $form[$field] = testInput($value);
+    }
+
+    if (!filter_var($form["mail"], FILTER_VALIDATE_EMAIL)) {
+        $_SESSION["error"]["contactForm"] = ["mail" => "Adresse mail invalide"];
+    }
+
+    if (strlen($form["message"]) > 4 ) {
+        $_SESSION["error"]["contactForm"] = ["message" => "Le message est trop court"];
+    }
+
+    foreach (["nom", "mail", "message"] as $field) {
+        if ($form[$field] == NULL) {
+            $_SESSION["error"]["contactForm"][$field] = "Champ requis";
+        }
+    }
+
+    if ($_SESSION["error"]["contactForm"]) {
+        return false;
+    } else {
+        // traiter les données
+        return true;
+    }
 }

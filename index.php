@@ -11,33 +11,33 @@ require_once './Data/multidimensional-catalog.php';
 require_once './Data/my-functions.php';
 
 $page = $_GET["page"] ?? "accueil";
+$page = testInput($page);
 
 if ($_POST["submitCart"]) {
-    if (isCartEmpty($_POST)) {
-        $page = "catalogue";
-        $_SESSION["error"] = ["cart" => "empty"];
-    } else {
-        foreach ($_POST as $name => $command) {
-            if (isset($command["night"])) {
-                $_SESSION["cart"][$name]["quantity"] += (int) $command["night"];
-                $_SESSION["cart"]["$name"]["transport"] = $command["transport"];
-            }
-        }
-        $page = "cart";
-    }
+    $page = saveCart($_POST);
 }
 
 if ($_POST["emptyCart"]) {
     emptyCart();
 }
 
-if ($products[$page]) {
+if ($_POST["submitContact"]) {
+    handleContactForm($_POST);
+} else {
+     $_SESSION["error"]["contactForm"] = NULL;
+}
+
+
+if (array_key_exists($page, $products)) {
     $pageInfo = $item = $products[$page];
     require_once './Templates/header.php';
     require_once './Templates/item_details.php';
     require_once './Templates/footer.php';
 } else {
-    require_once "./$page.php";
-}
 
-?>
+    if (is_file($page . ".php")) {
+        require_once "./$page.php";
+    } else {
+        require_once "./404.php";
+    }
+}
