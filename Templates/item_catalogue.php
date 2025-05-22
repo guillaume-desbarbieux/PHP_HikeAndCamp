@@ -7,16 +7,16 @@
             </div>
         </div>
         <div class="col-4 d-flex flex-column align-items-center">
-            <h3 class="row fs-4"><?php echo $item["title"] ?></h3>
-            <h4 class="row fs-6"><?php echo $item["note"] ?></h4>
-            <h4 class="row fs-6"><?php formatPrice(discountedPrice($item["prix"], $item["discount"])); ?>/nuit</h4>
-            <h5 class="row fs-6"><?php formatPrice(priceExcludingVAT($item["prix"])); ?> (HT)</h5>
+            <h3 class="row fs-4"><?= $item["title"] ?></h3>
+            <h4 class="row fs-6"><?= $item["note"] ?></h4>
+            <h4 class="row fs-6"><?= formatPrice(discountedPrice($item["prix"], $item["discount"])); ?>/nuit</h4>
+            <h5 class="row fs-6"><?= formatPrice(priceExcludingVAT($item["prix"])); ?> (HT)</h5>
             <!-- Bouton accès ancien formulaire de réservation -->
             <!-- <div class="row d-flex m-1 w-100">
                     <a href="#formulaire_reservation" class="btn btn-success m-auto" role="button">Réserver</a>
                 </div> -->
             <div class="row d-flex m-1 w-100">
-                <a href="<?= $item["page"] ?>" class='btn btn-outline-success m-auto' role='button'>Voir les détails</a>
+                <a href="?page=<?=$item["page"] ?>" class='btn btn-outline-success m-auto' role='button'>Voir les détails</a>
             </div>
 
             <label for="nights">Nombre de nuits :</label>
