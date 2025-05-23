@@ -156,37 +156,51 @@ function checkContactForm(): void
             $_SESSION["error"]["contactForm"]["fichier"]["size"] = "Votre image est trop lourde.";
         }
         $imageFileType = strtolower(pathinfo($_FILES["fichier"]["name"], PATHINFO_EXTENSION));
-        if (!in_array($imageFileType, ["jpg","png","jpeg","gif"])) {
+        if (!in_array($imageFileType, ["jpg", "png", "jpeg", "gif"])) {
             $_SESSION["error"]["contactForm"]["fichier"]["extension"] = "Les extensions autorisées sont JPG, JPEG, PNG, GIF.";
         }
     }
 
     if (!$_SESSION["error"]["contactForm"]) {
-        sendContactForm();
+        saveContactForm();
     }
 }
 
-function sendContactForm(): void
+function saveContactForm(): void
 {
-    saveAttachFile();
+    if ($_FILES["fichier"]["size"] > 0) {
+        saveAttachFile();
+    }
 
-    $fileContent = formattingContactForm();
+    saveTextContent();
+}
 
-    $OK = file_put_contents('storage/contactForm.txt', $fileContent, FILE_APPEND | LOCK_EX);
+function saveTextContent(): void
+{
+    $textContent = formatTextContent();
+
+    $OK = file_put_contents('storage/contactForm.txt', $textContent, FILE_APPEND | LOCK_EX);
 
     if ($OK) {
         $_SESSION["contactForm"] = NULL;
-        $_SESSION["validation"]["contactForm"] = "Votre formulaire a bien été envoyé.";
+        $_SESSION["validation"]["contactForm"]["textContent"] = "Votre formulaire a bien été envoyé.";
     } else {
-        $_SESSION["error"]["contactForm"]["validation"] = "Le formulaire n'a pas pu être envoyé. Veuillez contacter l'administrateur.";
+        $_SESSION["error"]["contactForm"]["textContent"]["validation"] = "Le formulaire n'a pas pu être envoyé. Veuillez contacter l'administrateur.";
     }
 }
 
 function saveAttachFile(): void
 {
-    echo "<br><br> saving attach file <br><br>";
-    $target_file = "storage/attachfile/" . date("Y-m-d") . "-" . date("h:i:s") . basename($_FILES["fichier"]["name"]);
-    
+    $target_file = "storage/attachFiles/" . date("Y-m-d") . " " . date("h-i-s") . " " . basename($_FILES["fichier"]["name"]);
+
+    $OK = move_uploaded_file($_FILES["fichier"]["tmp_name"], $target_file);
+
+    if ($OK) {
+        $_SESSION["validation"]["contactForm"]["fichier"] = "Votre pièce jointe a bien été envoyée.";
+        $_SESSION["contactForm"]["fichier"] = $target_file;
+    } else {
+        $_SESSION["error"]["contactForm"]["fichier"]["validation"] = "La pièce jointe n'a pas pu être envoyée.";
+    }
 }
 
 function resetContactForm(): void
@@ -195,7 +209,7 @@ function resetContactForm(): void
     $_SESSION["error"]["contactForm"] = NULL;
 }
 
-function formattingContactForm(): string
+function formatTextContent(): string
 {
     $separator = "------------------------------------------\n";
     $fileContent =
@@ -203,6 +217,8 @@ function formattingContactForm(): string
         "Formulaire de contact envoyé depuis Hike and Camp \n" .
         "Date : " . date("l d.m.Y") . " à " . date("h:i") . "\n $separator";
 
+    echo "<br> formating <br>";
+    var_dump($_SESSION["contactForm"]);
     foreach ($_SESSION["contactForm"] as $field => $value) {
         $fileContent .= "$field : \n $value \n $separator";
     }
