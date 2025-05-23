@@ -31,12 +31,12 @@ require_once './Templates/header.php';
             <?php
             // affichage du panier
             $facture = 0;
-            foreach ($_SESSION["cart"] as $article => $command) {
-                if ($command["quantity"] > 0) {
-                    $invoice = invoiceCommand($article, $command["quantity"], $command["transport"]);
-                    $facture += $invoice["total"];
-                    require './Templates/item_cart.php';
-                }
+            foreach ($_SESSION["cart"] as $article => $detail) {
+                $qty = $detail["qty"];
+                $delivery = $detail["transport"];
+                $invoice = invoiceCommand($article, $qty, $delivery);
+                $facture += $invoice["total"];
+                require './Templates/item_cart.php';
             }
             if ($facture == 0) {
                 echo "<h2 class='text-center'>Votre panier est vide :'(</h2>";

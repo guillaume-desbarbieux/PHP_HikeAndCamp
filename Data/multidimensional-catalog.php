@@ -1,8 +1,15 @@
 <?php
+$transport = [
+  "" => 0,
+  "taxi" => 10,
+  "jet" => 100,
+  "marche" => 1
+];
+
 $products = [
   "roybon" => [
-    "distance"    =>50,
-    "name"        =>"roybon",
+    "distance"    => 50,
+    "name"        => "roybon",
     "title"        => "Cabane De Roybon",
     "meta_description"  => "Hike and Camp - Page de réservation pour la Cabane de Roybon, Villard de Lans",
     "titre"        => "Cabane de Roybon - 1450m",
@@ -30,8 +37,8 @@ $products = [
 
 
   "servieres" => [
-    "distance"    =>150,
-    "name"        =>"servieres",
+    "distance"    => 150,
+    "name"        => "servieres",
     "title"        => "Lac de Servières",
     "meta_description"  => "Hike and Camp - Page de réservation pour le lac de Servières, Orcival",
     "titre"        => "Lac de Servières - 1200m",
@@ -56,8 +63,8 @@ $products = [
 
 
   "charlesdegaulle2" => [
-    "distance"    =>750,
-    "name"        =>"charlesdegaulle2",
+    "distance"    => 750,
+    "name"        => "charlesdegaulle2",
     "title"        => "Porte-avion Charles de Gaulle",
     "meta_description"  => "Hike and Camp - Page de réservation pour le porte-avion Charles de Gaulle, détroit de Messine - Mer Méditerrannée",
     "titre"        => "Porte-avion Charles de Gaulle - 12m",
@@ -83,8 +90,8 @@ $products = [
   ],
 
   "charlesdegaulle3" => [
-    "distance"    =>750,
-    "name"        =>"charlesdegaulle3",
+    "distance"    => 750,
+    "name"        => "charlesdegaulle3",
     "title"        => "Porte-avion Charles de Gaulle",
     "meta_description"  => "Hike and Camp - Page de réservation pour le porte-avion Charles de Gaulle, détroit de Messine - Mer Méditerrannée",
     "titre"        => "Porte-avion Charles de Gaulle - 12m",
@@ -110,8 +117,8 @@ $products = [
   ],
 
   "charlesdegaulle4" => [
-    "distance"    =>750,
-    "name"        =>"charlesdegaulle4",
+    "distance"    => 750,
+    "name"        => "charlesdegaulle4",
     "title"        => "Porte-avion Charles de Gaulle",
     "meta_description"  => "Hike and Camp - Page de réservation pour le porte-avion Charles de Gaulle, détroit de Messine - Mer Méditerrannée",
     "titre"        => "Porte-avion Charles de Gaulle - 12m",
@@ -137,8 +144,8 @@ $products = [
   ],
 
   "charlesdegaulle5" => [
-    "distance"    =>750,
-    "name"        =>"charlesdegaulle5",
+    "distance"    => 750,
+    "name"        => "charlesdegaulle5",
     "title"        => "Porte-avion Charles de Gaulle",
     "meta_description"  => "Hike and Camp - Page de réservation pour le porte-avion Charles de Gaulle, détroit de Messine - Mer Méditerrannée",
     "titre"        => "Porte-avion Charles de Gaulle - 12m",

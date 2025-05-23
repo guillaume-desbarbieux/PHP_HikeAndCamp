@@ -53,12 +53,8 @@ require_once './Templates/header.php';
             <form method="post">
                 <div class="row d-flex m-auto w-25 justify-content-center">
                     <input type="submit" class="btn btn-success m-auto" name="submitCart" value="Ajouter au panier">
-                    <?php
-                    if ($_SESSION["error"]["cart"] == "empty"){
-                        $_SESSION["error"]["cart"] = NULL;
-                        echo "<h3 class='text-center bg-danger w-auto mt-1'>Rien à ajouter au panier</h3>";
-                    }                    
-                    ?>
+                    <h3 class='text-center bg-danger w-auto mt-1'><?= $_SESSION["error"]["cart"]["validation"] ?? "" ?></h3>
+                    <?php $_SESSION["error"]["cart"]["validation"] = NULL; ?>
                 </div>
                 <div class="row justify-content-center">
                     <?php

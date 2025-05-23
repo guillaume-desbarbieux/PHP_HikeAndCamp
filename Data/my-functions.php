@@ -92,27 +92,35 @@ function invoiceCommand(string $item, int $quantity, string $deliveryMode): arra
     return [];
 }
 
-function isCartEmpty(array $cart): bool
+function getTmpCart(array $cart): string
 {
-    include './Data/multidimensional-catalog.php';
-    foreach ($products as $name => $infos) {
-        if ($cart[$name]["night"] > 0)
-            return false;
+    $_SESSION["cart"]["tmpCart"] = NULL;
+    foreach ($cart as $id => $detail) {
+        $qty = (int)testInput($detail["qty"] ?? "");
+        $delivery = testInput($detail["transport"] ?? "");
+        if ($qty > 0) {
+            $_SESSION["cart"]["tmpCart"][$id]["qty"] = $qty;
+            $_SESSION["cart"]["tmpCart"][$id]["transport"] = $delivery;
+        }
     }
-    return true;
+    return saveTmpCart();
 }
 
-function saveCart(array $cart): string
+function saveTmpCart(): string
 {
-    if (isCartEmpty($cart)) {
-        $_SESSION["error"] = ["cart" => "empty"];
+    if ($_SESSION["cart"]["tmpCart"] == NULL) {
+        $_SESSION["error"]["cart"]["validation"] = "Votre Panier est vide";
         return "catalogue";
     }
 
-    foreach ($cart as $name => $command) {
-        if (isset($command["night"])) {
-            $_SESSION["cart"][$name]["quantity"] += (int) $command["night"];
-            $_SESSION["cart"]["$name"]["transport"] = $command["transport"];
+    include_once './Data/multidimensional-catalog.php';
+
+    foreach ($_SESSION["cart"]["tmpCart"] as $id => $detail) {
+        $qty = $detail["qty"];
+        $delivery = $detail["delivery"];
+        if (isset($products[$id], $transport[$delivery])) {
+            $_SESSION["cart"][$id]["qty"] += $qty;
+            $_SESSION["cart"][$id]["transport"] = $transport;
         }
     }
     return "cart";
@@ -191,7 +199,7 @@ function saveTextContent(): void
 
 function saveAttachFile(): void
 {
-    $target_file = "storage/attachFiles/" . date("Y-m-d") . " " . date("h-i-s") . " " . basename($_FILES["fichier"]["name"]);
+    $target_file = "storage/attachFiles/" . date("Y-m-d") . "-" . date("h-i-s") . "-" . basename($_FILES["fichier"]["name"]);
 
     $OK = move_uploaded_file($_FILES["fichier"]["tmp_name"], $target_file);
 

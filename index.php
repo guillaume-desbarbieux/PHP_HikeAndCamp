@@ -1,9 +1,9 @@
 <?php
-/*
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-*/
+
 
 session_start();
 
@@ -14,7 +14,7 @@ $page = $_GET["page"] ?? "accueil";
 $page = testInput($page);
 
 if ($_POST["submitCart"]) {
-    $page = saveCart($_POST);
+    $page = getTmpCart($_POST);
 }
 
 if ($_POST["emptyCart"]) {

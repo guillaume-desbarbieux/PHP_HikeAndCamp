@@ -20,7 +20,7 @@
             </div>
 
             <label for="nights">Nombre de nuits :</label>
-            <input type="number" id="nights" name="<?= $item["name"] . "[night]" ?>" min="1" max="10" />
+            <input type="number" id="nights" name="<?= $item["name"] . "[qty]" ?>"/>
             <label for="transport">Moyen de transport :</label>
             <select name="<?= $item["name"] . "[transport]" ?>">
                 <option value="">--Please choose an option--</option>
