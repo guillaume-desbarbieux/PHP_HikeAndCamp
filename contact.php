@@ -7,7 +7,7 @@ require_once './Templates/header.php';
 ?>
 
 <div class="container border border-black border-5 rounded-5 p-1 bg-primary w-75 mt-5">
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <h2 class="text-center">Contact</h2>
         <h2 class="text-danger text-center font-weight-bold"><?= $_SESSION["error"]["contactForm"]["validation"] ?? "" ?></h2>
         <h2 class="text-success text-center font-weight-bold"><?= $_SESSION["validation"]["contactForm"] ?? "" ?></h2>
@@ -31,6 +31,10 @@ require_once './Templates/header.php';
         </div>
         <div class="mb-3 text-start">
             <label for="fichier1" class="form-label">Capture d'écran de votre problème</label>
+             <div class="text-danger font-weight-bold"><?= $_SESSION["error"]["contactForm"]["fichier"]["type"] ?? "" ?></div>
+             <div class="text-danger font-weight-bold"><?= $_SESSION["error"]["contactForm"]["fichier"]["size"] ?? "" ?></div>
+             <div class="text-danger font-weight-bold"><?= $_SESSION["error"]["contactForm"]["fichier"]["extension"] ?? "" ?></div>
+             
             <input type="file" class="form-control" id="fichier1" name="fichier"><?= $_SESSION["contactForm"]["fichier"] ?? "" ?></input>
         </div>
         <div class="container text-center">

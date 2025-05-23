@@ -147,6 +147,20 @@ function checkContactForm(): void
         }
     }
 
+    if ($_FILES["fichier"]["size"] > 0) {
+        $check = getimagesize($_FILES["fichier"]["tmp_name"]);
+        if ($check == false) {
+            $_SESSION["error"]["contactForm"]["fichier"]["type"] = "Ce fichier n'est pas une image.";
+        }
+        if ($_FILES["fichier"]["size"] > 500000) {
+            $_SESSION["error"]["contactForm"]["fichier"]["size"] = "Votre image est trop lourde.";
+        }
+        $imageFileType = strtolower(pathinfo($_FILES["fichier"]["name"], PATHINFO_EXTENSION));
+        if (!in_array($imageFileType, ["jpg","png","jpeg","gif"])) {
+            $_SESSION["error"]["contactForm"]["fichier"]["extension"] = "Les extensions autorisées sont JPG, JPEG, PNG, GIF.";
+        }
+    }
+
     if (!$_SESSION["error"]["contactForm"]) {
         sendContactForm();
     }
@@ -154,10 +168,11 @@ function checkContactForm(): void
 
 function sendContactForm(): void
 {
+    saveAttachFile();
+
     $fileContent = formattingContactForm();
 
-
-    $OK = file_put_contents('contactForm.txt', $fileContent, FILE_APPEND | LOCK_EX);
+    $OK = file_put_contents('storage/contactForm.txt', $fileContent, FILE_APPEND | LOCK_EX);
 
     if ($OK) {
         $_SESSION["contactForm"] = NULL;
@@ -165,6 +180,13 @@ function sendContactForm(): void
     } else {
         $_SESSION["error"]["contactForm"]["validation"] = "Le formulaire n'a pas pu être envoyé. Veuillez contacter l'administrateur.";
     }
+}
+
+function saveAttachFile(): void
+{
+    echo "<br><br> saving attach file <br><br>";
+    $target_file = "storage/attachfile/" . date("Y-m-d") . "-" . date("h:i:s") . basename($_FILES["fichier"]["name"]);
+    
 }
 
 function resetContactForm(): void
