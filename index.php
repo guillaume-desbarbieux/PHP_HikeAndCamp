@@ -21,10 +21,12 @@ if ($_POST["emptyCart"]) {
     emptyCart();
 }
 
-if ($_POST["submitContact"]) {
-    handleContactForm($_POST);
-} else {
-     $_SESSION["error"]["contactForm"] = NULL;
+if ($_POST["submitContactForm"]) {
+    submitContactForm($_POST);
+}
+
+if ($_POST["resetContactForm"]) {
+    resetContactForm();
 }
 
 

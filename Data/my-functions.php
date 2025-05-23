@@ -118,30 +118,73 @@ function saveCart(array $cart): string
     return "cart";
 }
 
-function handleContactForm(array $form): bool
+function submitContactForm(array $form): void
 {
+    $_SESSION["contactForm"] = NULL;
+
     foreach ($form as $field => $value) {
-        $form[$field] = testInput($value);
+        $_SESSION["contactForm"][$field] = testInput($value);
     }
 
-    if (!filter_var($form["mail"], FILTER_VALIDATE_EMAIL)) {
-        $_SESSION["error"]["contactForm"] = ["mail" => "Adresse mail invalide"];
+    checkContactForm();
+}
+
+function checkContactForm(): void
+{
+    $_SESSION["error"]["contactForm"] = NULL;
+
+    if (!filter_var($_SESSION["contactForm"]["mail"], FILTER_VALIDATE_EMAIL)) {
+        $_SESSION["error"]["contactForm"]["mail"] = "Adresse mail invalide";
     }
 
-    if (strlen($form["message"]) > 4 ) {
-        $_SESSION["error"]["contactForm"] = ["message" => "Le message est trop court"];
+    if (strlen($_SESSION["contactForm"]["message"]) < 5) {
+        $_SESSION["error"]["contactForm"]["message"] = "Le message est trop court";
     }
 
     foreach (["nom", "mail", "message"] as $field) {
-        if ($form[$field] == NULL) {
+        if ($_SESSION["contactForm"][$field] == NULL) {
             $_SESSION["error"]["contactForm"][$field] = "Champ requis";
         }
     }
 
-    if ($_SESSION["error"]["contactForm"]) {
-        return false;
-    } else {
-        // traiter les données
-        return true;
+    if (!$_SESSION["error"]["contactForm"]) {
+        sendContactForm();
     }
+}
+
+function sendContactForm(): void
+{
+    $fileContent = formattingContactForm();
+
+
+    $OK = file_put_contents('contactForm.txt', $fileContent, FILE_APPEND | LOCK_EX);
+
+    if ($OK) {
+        $_SESSION["contactForm"] = NULL;
+        $_SESSION["validation"]["contactForm"] = "Votre formulaire a bien été envoyé.";
+    } else {
+        $_SESSION["error"]["contactForm"]["validation"] = "Le formulaire n'a pas pu être envoyé. Veuillez contacter l'administrateur.";
+    }
+}
+
+function resetContactForm(): void
+{
+    $_SESSION["contactForm"] = NULL;
+    $_SESSION["error"]["contactForm"] = NULL;
+}
+
+function formattingContactForm(): string
+{
+    $separator = "------------------------------------------\n";
+    $fileContent =
+        "\n \n $separator $separator START OF CONTACT FORM \n $separator" .
+        "Formulaire de contact envoyé depuis Hike and Camp \n" .
+        "Date : " . date("l d.m.Y") . " à " . date("h:i") . "\n $separator";
+
+    foreach ($_SESSION["contactForm"] as $field => $value) {
+        $fileContent .= "$field : \n $value \n $separator";
+    }
+    $fileContent .= "$separator END OF CONTACT FORM \n $separator $separator";
+
+    return $fileContent;
 }
