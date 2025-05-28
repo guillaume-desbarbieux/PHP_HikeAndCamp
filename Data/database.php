@@ -3,7 +3,7 @@
 
 function sendQueryToDatabase(string $query): array
 {
-     var_dump($query);
+    var_dump($query);
     try {
         $mysqlClient = new PDO(
             'mysql:host=localhost;dbname=hikeandcamp;charset=utf8',
@@ -128,8 +128,31 @@ function addNewProduct(array $product): array
         '$weight',
         '$quantity',
         '$is_available');";
-   
+
     return sendQueryToDatabase($query);
 }
 
-?>
+class Order
+{
+
+    public $customer_id;
+    public $discount_name;
+    public $delivery_id;
+    public $listProducts;
+    public $totalPrice;
+    public $totalWeight;
+
+    public function calculateTotalPrice()
+    {
+        $productsInfo = listAllContent("products");
+        $deliveryInfo = listAllContent("deliveries");
+        $discount = sendQueryToDatabase("SELECT discount_percentage, discount_fix FROM discount_code WHERE name = $discount_name;");
+        $totalPrice = 0;
+        $totalWeight = 0;
+        foreach ($listProducts as $item => $qty) {
+            $totalPrice += $qty * $productsInfo[$item]["price"];
+            $totalWeight += $qty * $productsInfo[$item]["weight"];
+        }
+        $totalPrice = $totalPrice*(1-$discount["discount_percentage"])-$discount["discount_fix"];
+    }
+}
