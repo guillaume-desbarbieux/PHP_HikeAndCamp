@@ -6,7 +6,7 @@ function sendQueryToDatabase(string $query): array
      var_dump($query);
     try {
         $mysqlClient = new PDO(
-            'mysql:host=localhost;dbname=hikeandcamp;charset=utf8',
+            'mysql:host=localhost;dbname=hikeandcampTemp;charset=utf8',
             'test',
             'a',
 
