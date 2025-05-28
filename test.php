@@ -34,9 +34,12 @@ $kayak = [
     "id_category" => 2,
     "id_tva" => 3,
 ];
-var_dump($kayak);
+//var_dump($kayak);
 
 addNewProduct($kayak);
+
+
+var_dump(sendQueryToDatabase("SELECT description from products WHERE id = 18;"));
 
 ////// Fin des tests //////
 
