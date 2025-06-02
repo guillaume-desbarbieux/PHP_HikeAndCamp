@@ -109,11 +109,11 @@ function saveCart(array $cart): string
     }
 
     foreach ($cart as $id => $qty) {
-        if (isset($qty)) {
-            $qty = testInput($qty);
+        if ($qty > 0) {
             $_SESSION["cart"][$id] += (int) $qty;
         }
     }
+
     return "cart";
 }
 

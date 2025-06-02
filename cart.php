@@ -31,9 +31,10 @@ require_once './Templates/header.php';
             <?php
             // affichage du panier
             $facture = 0;
+            $products = listAllContent("products");
             foreach ($_SESSION["cart"] as $id => $qty) {
-                if ($command["quantity"] > 0) {
-                    $invoice = invoiceCommand($article, $command["quantity"], $command["transport"]);
+                if ($qty > 0) {
+                    $invoice = invoiceCommand($id, $qty);
                     $facture += $invoice["total"];
                     require './Templates/item_cart.php';
                 }
