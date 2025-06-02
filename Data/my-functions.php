@@ -94,9 +94,8 @@ function invoiceCommand(string $item, int $quantity, string $deliveryMode): arra
 
 function isCartEmpty(array $cart): bool
 {
-    include './Data/multidimensional-catalog.php';
-    foreach ($products as $name => $infos) {
-        if ($cart[$name]["night"] > 0)
+    foreach ($cart as $id => $qty) {
+        if ($qty > 0)
             return false;
     }
     return true;
@@ -105,14 +104,14 @@ function isCartEmpty(array $cart): bool
 function saveCart(array $cart): string
 {
     if (isCartEmpty($cart)) {
-        $_SESSION["error"] = ["cart" => "empty"];
+        $_SESSION["error"]["cart"] = "empty";
         return "catalogue";
     }
 
-    foreach ($cart as $name => $command) {
-        if (isset($command["night"])) {
-            $_SESSION["cart"][$name]["quantity"] += (int) $command["night"];
-            $_SESSION["cart"]["$name"]["transport"] = $command["transport"];
+    foreach ($cart as $id => $qty) {
+        if (isset($qty)) {
+            $qty = testInput($qty);
+            $_SESSION["cart"][$id] += (int) $qty;
         }
     }
     return "cart";

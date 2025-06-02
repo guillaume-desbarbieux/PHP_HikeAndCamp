@@ -1,12 +1,12 @@
 <?php
-
+/*
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 
 session_start();
-
+*/
 
 require_once './Data/multidimensional-catalog.php';
 require_once './Data/my-functions.php';
@@ -29,6 +29,20 @@ if ($_POST["submitContactForm"]) {
 
 if ($_POST["resetContactForm"]) {
     resetContactForm();
+}
+
+if ($_POST["submitProduct"]) {
+    $product = new Product(
+        htmlspecialchars($_POST["nom"]),
+        (int)$_POST["prix"],
+        (int)$_POST["categorie"],
+        htmlspecialchars($_POST["description"]),
+        htmlspecialchars($_POST["image"]),
+        (int)$_POST["poids"],
+        (int)$_POST["stock"],
+        isset($_POST["disponible"]) ? 1 : 0
+    );
+    echo addNewProduct($product);
 }
 
 

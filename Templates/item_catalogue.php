@@ -3,34 +3,20 @@
         <div class="col-8 d-flex justify-content-center align-items-center ">
             <div class="ratio ratio-4x3 m-2">
                 <img class='img-fluid object-fit-cover border border-warning border-3 rounded-2'
-                    src=<?= $item["image"]["url"] ?> alt=<?= $item["image"]["description"] ?> title=<?= $item["titre"] ?>>
+                    src=<?= $item["url_image"] ?> alt=<?= $item["name"] ?> title=<?= $item["name"] ?>>
             </div>
         </div>
         <div class="col-4 d-flex flex-column align-items-center">
-            <h3 class="row fs-4"><?= $item["title"] ?></h3>
+            <h3 class="row fs-4"><?= $item["name"] ?></h3>
             <h4 class="row fs-6"><?= $item["note"] ?></h4>
-            <h4 class="row fs-6"><?= formatPrice(discountedPrice($item["prix"], $item["discount"])); ?>/nuit</h4>
-            <h5 class="row fs-6"><?= formatPrice(priceExcludingVAT($item["prix"])); ?> (HT)</h5>
-            <!-- Bouton accès ancien formulaire de réservation -->
-            <!-- <div class="row d-flex m-1 w-100">
-                    <a href="#formulaire_reservation" class="btn btn-success m-auto" role="button">Réserver</a>
-                </div> -->
+            <h4 class="row fs-6"><?= formatPrice($item["price"]); ?>/nuit</h4>
+            <h5 class="row fs-6"><?= formatPrice(priceExcludingVAT($item["price"])); ?> (HT)</h5>
             <div class="row d-flex m-1 w-100">
-                <a href="?page=<?=$item["page"] ?>" class='btn btn-outline-success m-auto' role='button'>Voir les détails</a>
+                <a href="?page=<?= $item["page"] ?>" class='btn btn-outline-success m-auto' role='button'>Voir les détails</a>
             </div>
 
             <label for="nights">Nombre de nuits :</label>
-            <input type="number" id="nights" name="<?= $item["name"] . "[night]" ?>" min="1" max="10" />
-            <label for="transport">Moyen de transport :</label>
-            <select name="<?= $item["name"] . "[transport]" ?>">
-                <option value="">--Please choose an option--</option>
-                <option value="jet">Jet privé</option>
-                <option value="taxi">Taxi</option>
-                <option value="marche">Marche</option>
-            </select>
-
-
-
+            <input type="number" id="nights" name="<?= $item["id"] ?>" min="1" max="10" />
         </div>
     </div>
 </div>

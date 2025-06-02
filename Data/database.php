@@ -17,8 +17,8 @@ function sendQueryToDatabase(string $query): array
 
     $answer = $mysqlClient->prepare($query);
     $answer->execute();
-
-    return $answer->fetchAll();
+    $answer = $answer->fetchAll();
+    return $answer ?? [];
 }
 
 function arrayToHTML(array $array): void
@@ -93,8 +93,55 @@ function sendNewOrder(object $order): array
     return sendQueryToDatabase($query);
 }
 
-function addNewProduct(object $product): array
+function addNewProduct(object $product): string
 {
+    // Check if the product already exists
+    $existingProducts = sendQueryToDatabase("SELECT * FROM products WHERE name = '$product->name'");
+    if (count($existingProducts) > 0) {
+        return "Product already exists.";
+    }
+    // Prepare the SQL query to insert the new product
+    // Note: Ensure that the values are properly sanitized to prevent SQL injection
+    $product->name = htmlspecialchars($product->name);
+    $product->description = htmlspecialchars($product->description);
+    $product->url_image = htmlspecialchars($product->url_image);
+    $product->weight = (int)$product->weight;
+    $product->stock = (int)$product->stock;
+    $product->is_available = (int)$product->is_available; // Convert boolean to integer (1 or 0)
+    $product->price = (int)$product->price; // Ensure price is an integer
+    $product->id_category = (int)$product->id_category; // Ensure category ID is an integer
+    if ($product->id_category < 1) {
+        $product->id_category = 1; // Default category ID
+    }
+    if ($product->weight < 0) {
+        $product->weight = 0; // Default weight
+    }
+    if ($product->stock < 0) {
+        $product->stock = 0; // Default stock
+    }
+    if ($product->price < 0) {
+        $product->price = 0; // Default price
+    }
+    if ($product->is_available !== 0 && $product->is_available !== 1) {
+        $product->is_available = 1; // Default to available
+    }
+    if ($product->url_image === "") {
+        $product->url_image = "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg"; // Default image URL
+    }
+    if ($product->description === "") {
+        $product->description = "Description à compléter"; // Default description
+    }
+    if ($product->name === "") {
+        return "Product name cannot be empty.";
+    }
+    if ($product->price === 0) {
+        return "Product price cannot be zero.";
+    }
+    if ($product->stock === 0) {
+        return "Product stock cannot be zero.";
+    }
+
+
     $query =
         "INSERT INTO `products` 
         (`category_id`,
@@ -104,7 +151,11 @@ function addNewProduct(object $product): array
         `url_image`,
         `weight`,
         `stock`,
-        `is_available`)
+        `is_available`,
+        `meta_description`,
+        `adress`,
+        `note`,
+        `url_maps`)
         VALUES
         ('$product->id_category',
         '$product->name',
@@ -113,9 +164,15 @@ function addNewProduct(object $product): array
         '$product->url_image',
         '$product->weight',
         '$product->stock',
-        '$product->is_available');";
+        '$product->is_available',
+        '$product->meta_description',
+        '$product->adress',
+        '$product->note',
+        '$product->url_maps');";
 
-    return sendQueryToDatabase($query);
+    sendQueryToDatabase($query);
+    // Return a success message
+    return  "Product added successfully.";
 }
 
 class Order
@@ -153,7 +210,7 @@ class Order
             $totalPrice += $qty * $productsInfo[$item]["price"];
             $totalWeight += $qty * $productsInfo[$item]["weight"];
         }
-        $totalPrice = (int) ($totalPrice * (1 - $discount["discount_percentage"]/100) - $discount["discount_fix"]);
+        $totalPrice = (int) ($totalPrice * (1 - $discount["discount_percentage"] / 100) - $discount["discount_fix"]);
         return ["Price" => $totalPrice, "Weight" => $totalWeight];
     }
 }
@@ -168,6 +225,10 @@ class Product
     public $weight;
     public $stock;
     public $is_available;
+    public $meta_description;
+    public $adress;
+    public $note;
+    public $url_maps;
 
     public function __construct(
         string $name,
@@ -177,7 +238,10 @@ class Product
         string $url_image = "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg",
         int $weight = 0,
         int $stock = 1,
-        bool $is_available = true
+        bool $is_available = true,
+        string $adress = "",
+        string $note = "",
+        string $url_maps = ""
     ) {
         $this->id_category = $id_category;
         $this->name = htmlspecialchars($name);
@@ -187,5 +251,9 @@ class Product
         $this->weight = $weight;
         $this->stock = $stock;
         $this->is_available = $is_available;
+        $this->meta_description = "Achetez " . $this->name . " à partir de " . ($this->price / 100) . "€ !";
+        $this->adress = $adress;
+        $this->note = $note;
+        $this->url_maps = $url_maps;
     }
 }

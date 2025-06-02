@@ -31,7 +31,7 @@ require_once './Templates/header.php';
             <?php
             // affichage du panier
             $facture = 0;
-            foreach ($_SESSION["cart"] as $article => $command) {
+            foreach ($_SESSION["cart"] as $id => $qty) {
                 if ($command["quantity"] > 0) {
                     $invoice = invoiceCommand($article, $command["quantity"], $command["transport"]);
                     $facture += $invoice["total"];
