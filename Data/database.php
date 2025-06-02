@@ -3,7 +3,6 @@
 
 function sendQueryToDatabase(string $query): array
 {
-    var_dump($query);
     try {
         $mysqlClient = new PDO(
             'mysql:host=localhost;dbname=hikeandcamp;charset=utf8',
@@ -77,17 +76,16 @@ function listOrdersFromCustomer(int $id): array
     return sendQueryToDatabase($query);
 }
 
-function sendNewOrder(int $id_customer, array $listProducts, $id_delivery = 1): array
+function sendNewOrder(object $order): array
 {
-    $number = rand();
     $query =
-        "INSERT INTO `orders` ( `customer_id`, `delivery_mode_id`, `total_amount`, `date`, `number`)
-         VALUES ( $id_customer,     $id_delivery,	0,	DATE(NOW()), $number);
+        "INSERT INTO `orders` ( `customer_id`, `discount_name`, `delivery_mode_id`, `totalPrice`, `created_at`)
+         VALUES ( $order->customer_id, $order->discount_name, $order->delivery_id, $order->totalPrice, NOW());
 
-         INSERT INTO order_product (order_id, product_id, quantity)
+         INSERT INTO order_products (order_id, product_id, quantity)
          VALUES ";
 
-    foreach ($listProducts as $id_product => $quantity) {
+    foreach ($order->listProducts as $id_product => $quantity) {
         $query .= "(LAST_INSERT_ID(), $id_product , $quantity),";
     }
     $query = rtrim($query, ",") . ";";
@@ -95,39 +93,27 @@ function sendNewOrder(int $id_customer, array $listProducts, $id_delivery = 1): 
     return sendQueryToDatabase($query);
 }
 
-function addNewProduct(array $product): array
+function addNewProduct(object $product): array
 {
-    $name = htmlspecialchars($product["name"]);
-    $description = htmlspecialchars($product["description"]);
-    $price = htmlspecialchars($product["price"]);
-    $url_image = htmlspecialchars($product["url_image"]);
-    $weight = htmlspecialchars($product["weight"]);
-    $quantity = htmlspecialchars($product["quantity"]);
-    $is_available = htmlspecialchars($product["is_available"]);
-    $id_category = htmlspecialchars($product["id_category"]);
-    $id_tva = htmlspecialchars($product["id_tva"]);
-
     $query =
         "INSERT INTO `products` 
         (`category_id`,
-        `vat_id`,
         `name`,
         `description`,
         `price`,
         `url_image`,
         `weight`,
-        `quantity`,
+        `stock`,
         `is_available`)
         VALUES
-        ('$id_category',
-        '$id_tva',
-        '$name',
-        '$description',
-        '$price',
-        '$url_image',
-        '$weight',
-        '$quantity',
-        '$is_available');";
+        ('$product->id_category',
+        '$product->name',
+        '$product->description',
+        '$product->price',
+        '$product->url_image',
+        '$product->weight',
+        '$product->stock',
+        '$product->is_available');";
 
     return sendQueryToDatabase($query);
 }
@@ -136,23 +122,70 @@ class Order
 {
 
     public $customer_id;
-    public $discount_name;
-    public $delivery_id;
     public $listProducts;
+    public $delivery_id;
+    public $discount_name;
     public $totalPrice;
     public $totalWeight;
 
-    public function calculateTotalPrice()
+    public function __construct(int $customer_id, array $listProducts, int $delivery_id = 1, string $discount_name = "default")
+    {
+        $this->customer_id = $customer_id;
+        $this->listProducts = $listProducts;
+        $this->delivery_id = $delivery_id;
+        $this->discount_name = $discount_name;
+        $total = $this->calculateTotalPriceAndWeight();
+        $this->totalPrice = $total["Price"];
+        $this->totalWeight = $total["Weight"];
+    }
+
+    public function calculateTotalPriceAndWeight()
     {
         $productsInfo = listAllContent("products");
         $deliveryInfo = listAllContent("deliveries");
-        $discount = sendQueryToDatabase("SELECT discount_percentage, discount_fix FROM discount_code WHERE name = $discount_name;");
+        $discount = sendQueryToDatabase('SELECT discount_percentage, discount_fix FROM discount_code WHERE name = "' . $this->discount_name . '";');
+        $discount = $discount[0];
         $totalPrice = 0;
         $totalWeight = 0;
-        foreach ($listProducts as $item => $qty) {
+        echo "<br> Discount Info <br>";
+        var_dump($discount);
+        foreach ($this->listProducts as $item => $qty) {
             $totalPrice += $qty * $productsInfo[$item]["price"];
             $totalWeight += $qty * $productsInfo[$item]["weight"];
         }
-        $totalPrice = $totalPrice*(1-$discount["discount_percentage"])-$discount["discount_fix"];
+        $totalPrice = (int) ($totalPrice * (1 - $discount["discount_percentage"]/100) - $discount["discount_fix"]);
+        return ["Price" => $totalPrice, "Weight" => $totalWeight];
+    }
+}
+
+class Product
+{
+    public $id_category;
+    public $name;
+    public $description;
+    public $price;
+    public $url_image;
+    public $weight;
+    public $stock;
+    public $is_available;
+
+    public function __construct(
+        string $name,
+        int $price,
+        int $id_category = 1,
+        string $description = "description à compléter",
+        string $url_image = "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg",
+        int $weight = 0,
+        int $stock = 1,
+        bool $is_available = true
+    ) {
+        $this->id_category = $id_category;
+        $this->name = htmlspecialchars($name);
+        $this->description = htmlspecialchars($description);
+        $this->price = $price;
+        $this->url_image = htmlspecialchars($url_image);
+        $this->weight = $weight;
+        $this->stock = $stock;
+        $this->is_available = $is_available;
     }
 }

@@ -22,7 +22,7 @@ require_once './Templates/header.php';
 
 //arrayToHTML($answer);
 
-
+/*
 $kayak = [
     'name' => "Kayak",
     "description" => "Kayak réversible et insubmersible !",
@@ -37,6 +37,25 @@ $kayak = [
 var_dump($kayak);
 
 addNewProduct($kayak);
+*/
+
+$blabla = new Order(1, [1=>5, 4=>2, 3=>10]);
+echo "<br> blabla <br>";
+var_dump($blabla);
+sendNewOrder($blabla);
+
+/*
+$bateau = new Product ("Bateau", 10000, 1, "Bateau de luxe", "https://www.artiemhotels.com/uploads/5f4e933a-d8bf-458c-a630-1fb64a66ffa8/5f4e933a-d8bf-458c-a630-1fb64a66ffa8.jpeg", 1000, 10, true);
+$train = new Product ("Train", 50000, 1, "Train à vapeur", "https://www.artiemhotels.com/uploads/5f4e933a-d8bf-458c-a630-1fb64a66ffa8/5f4e933a-d8bf-458c-a630-1fb64a66ffa8.jpeg", 2000, 5, true);
+$camion = new Product ("Camion", 30000, 1, "Camion de livraison", "https://www.artiemhotels.com/uploads/5f4e933a-d8bf-458c-a630-1fb64a66ffa8/5f4e933a-d8bf-458c-a630-1fb64a66ffa8.jpeg", 1500, 20, true);
+$helicoptere = new Product ("Hélicoptère", 200000, 1, "Hélicoptère de secours", "https://www.artiemhotels.com/uploads/5f4e933a-d8bf-458c-a630-1fb64a66ffa8/5f4e933a-d8bf-458c-a630-1fb64a66ffa8.jpeg", 500, 2, true);
+
+addNewProduct($train);
+addNewProduct($bateau);
+addNewProduct($camion);
+addNewProduct($helicoptere);
+*/
+
 
 ////// Fin des tests //////
 
