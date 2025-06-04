@@ -20,6 +20,7 @@ require_once './Templates/header.php';
             <form method="POST">
                 <div class="row d-flex m-auto w-25 justify-content-center">
                     <input type='submit' class='btn btn-danger m-auto' name='emptyCart' value='Vider le panier'>
+                    <input type='submit' class='btn btn-success m-auto' name='sendOrder' value='Valider le panier'>
                 </div>
             </form>
             <?php
@@ -34,8 +35,9 @@ require_once './Templates/header.php';
             $products = listAllContent("products");
             foreach ($_SESSION["cart"] as $id => $qty) {
                 if ($qty > 0) {
-                    $invoice = invoiceCommand($id, $qty);
-                    $facture += $invoice["total"];
+                    $product = findProductById($id);
+
+                    $facture += $qty* $product["price"];
                     require './Templates/item_cart.php';
                 }
             }

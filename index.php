@@ -3,12 +3,12 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
-
-session_start();
 */
 
-require_once './Data/multidimensional-catalog.php';
+session_start();
+
+
+//require_once './Data/multidimensional-catalog.php';
 require_once './Data/my-functions.php';
 require_once './Data/database.php';
 
@@ -45,17 +45,18 @@ if ($_POST["submitProduct"]) {
     echo addNewProduct($product);
 }
 
+if ($_POST["sendOrder"]) {
+    $order = new Order(
+        1,
+        $_SESSION["cart"]);
+        
+    sendNewOrder($order);
+    emptyCart();
+}
 
-if (array_key_exists($page, $products)) {
-    $pageInfo = $item = $products[$page];
-    require_once './Templates/header.php';
-    require_once './Templates/item_details.php';
-    require_once './Templates/footer.php';
+
+if (is_file($page . ".php")) {
+    require_once "./$page.php";
 } else {
-
-    if (is_file($page . ".php")) {
-        require_once "./$page.php";
-    } else {
-        require_once "./404.php";
-    }
+    require_once "./404.php";
 }

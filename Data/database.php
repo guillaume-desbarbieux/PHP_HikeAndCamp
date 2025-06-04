@@ -1,7 +1,7 @@
 <?php
 
 
-function sendQueryToDatabase(string $query): array
+function sendQueryToDatabase(string $query, array $param): array
 {
     try {
         $mysqlClient = new PDO(
@@ -16,7 +16,7 @@ function sendQueryToDatabase(string $query): array
     }
 
     $answer = $mysqlClient->prepare($query);
-    $answer->execute();
+    $answer->execute($param);
     $answer = $answer->fetchAll();
     return $answer ?? [];
 }
@@ -38,13 +38,13 @@ function arrayToHTML(array $array): void
 
 function listAllContent(string $table): array
 {
-    return sendQueryToDatabase("SELECT * from $table");
+    return sendQueryToDatabase("SELECT * from $table", []);
 }
 
 function listTodayOrders(): array
 {
 
-    return sendQueryToDatabase("SELECT* FROM orders WHERE (date = DATE(NOW())) ORDER BY number DESC ");
+    return sendQueryToDatabase("SELECT * FROM orders WHERE (date = DATE(NOW())) ORDER BY number DESC ", []);
 }
 
 function listProductsFromOrder(int $id): array
@@ -54,9 +54,9 @@ function listProductsFromOrder(int $id): array
          FROM products
          INNER JOIN order_product
          ON products.id = order_product.product_id
-         AND order_product.order_id = $id";
+         AND order_product.order_id = :id";
 
-    return sendQueryToDatabase($query);
+    return sendQueryToDatabase($query, [":id" => $id]);
 }
 
 function listOrdersFromCustomer(int $id): array
@@ -70,33 +70,40 @@ function listOrdersFromCustomer(int $id): array
         ON products.id = order_product.product_id
         AND order_product.order_id = orders.id
         AND orders.customer_id = customers.id
-        AND customers.id = $id
+        AND customers.id = :id
         GROUP BY orders.number";
 
-    return sendQueryToDatabase($query);
+    return sendQueryToDatabase($query, [":id" => $id]);
 }
 
 function sendNewOrder(object $order): array
 {
     $query =
         "INSERT INTO `orders` ( `customer_id`, `discount_name`, `delivery_mode_id`, `totalPrice`, `created_at`)
-         VALUES ( $order->customer_id, $order->discount_name, $order->delivery_id, $order->totalPrice, NOW());
+         VALUES ( :customer_id, :discount_name, :delivery_id, :totalPrice, NOW());
 
          INSERT INTO order_products (order_id, product_id, quantity)
          VALUES ";
 
     foreach ($order->listProducts as $id_product => $quantity) {
+        if ($quantity > 0) {
         $query .= "(LAST_INSERT_ID(), $id_product , $quantity),";
+        }
     }
     $query = rtrim($query, ",") . ";";
-
-    return sendQueryToDatabase($query);
+    
+    return sendQueryToDatabase($query, [
+        ":customer_id" => $order->customer_id,
+        ":discount_name" => $order->discount_name,
+        ":delivery_id" => $order->delivery_id,
+        ":totalPrice" => $order->totalPrice
+    ]);
 }
 
 function addNewProduct(object $product): string
 {
     // Check if the product already exists
-    $existingProducts = sendQueryToDatabase("SELECT * FROM products WHERE name = '$product->name'");
+    $existingProducts = sendQueryToDatabase("SELECT * FROM products WHERE name = :name", [":name" => $product->name]);
     if (count($existingProducts) > 0) {
         return "Product already exists.";
     }
@@ -157,22 +164,42 @@ function addNewProduct(object $product): string
         `note`,
         `url_maps`)
         VALUES
-        ('$product->id_category',
-        '$product->name',
-        '$product->description',
-        '$product->price',
-        '$product->url_image',
-        '$product->weight',
-        '$product->stock',
-        '$product->is_available',
-        '$product->meta_description',
-        '$product->adress',
-        '$product->note',
-        '$product->url_maps');";
+        (:id_category,
+        :name,
+        :description,
+        :price,
+        :url_image,
+        :weight,
+        :stock,
+        :is_available,
+        :meta_description,
+        :adress,
+        :note,
+        :url_maps);";
 
-    sendQueryToDatabase($query);
+    sendQueryToDatabase($query, [
+        ":id_category" => $product->id_category,
+        ":name" => $product->name,
+        ":description" => $product->description,
+        ":price" => $product->price,
+        ":url_image" => $product->url_image,
+        ":weight" => $product->weight,
+        ":stock" => $product->stock,
+        ":is_available" => $product->is_available,
+        ":meta_description" => $product->meta_description,
+        ":adress" => $product->adress,
+        ":note" => $product->note,
+        ":url_maps" => $product->url_maps
+    ]);
     // Return a success message
     return  "Product added successfully.";
+}
+
+function findProductById(int $id): array
+{
+    $query = "SELECT * FROM products WHERE id = :id";
+    $result = sendQueryToDatabase($query, [":id" => $id]);
+    return $result ? $result[0] : [];
 }
 
 class Order
@@ -198,19 +225,18 @@ class Order
 
     public function calculateTotalPriceAndWeight()
     {
-        $productsInfo = listAllContent("products");
-        $deliveryInfo = listAllContent("deliveries");
-        $discount = sendQueryToDatabase('SELECT discount_percentage, discount_fix FROM discount_code WHERE name = "' . $this->discount_name . '";');
+        $productsInfo = listAllContent("products")[0];
+        $deliveryInfo = listAllContent("deliveries")[0];
+        $discount = sendQueryToDatabase('SELECT discount_percentage, discount_fix FROM discount_code WHERE name = :discount', [":discount" => $this->discount_name]);
         $discount = $discount[0];
         $totalPrice = 0;
         $totalWeight = 0;
-        echo "<br> Discount Info <br>";
-        var_dump($discount);
         foreach ($this->listProducts as $item => $qty) {
             $totalPrice += $qty * $productsInfo[$item]["price"];
             $totalWeight += $qty * $productsInfo[$item]["weight"];
+            print_r($productsInfo);
         }
-        $totalPrice = (int) ($totalPrice * (1 - $discount["discount_percentage"] / 100) - $discount["discount_fix"]);
+                $totalPrice = (int) ($totalPrice * (1 - $discount["discount_percentage"] / 100) - $discount["discount_fix"]);
         return ["Price" => $totalPrice, "Weight" => $totalWeight];
     }
 }

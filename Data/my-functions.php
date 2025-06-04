@@ -64,27 +64,24 @@ function emptyCart(): void
     $_SESSION["cart"] = NULL;
 }
 
-function invoiceCommand(string $item, int $quantity, string $deliveryMode): array
+function invoiceCommand(string $item, int $quantity): array
 {
-    include './Data/multidimensional-catalog.php';
+   // include './Data/multidimensional-catalog.php';
     foreach ($products as $product => $detail) {
         if ($product == $item) {
             $groupPrice = $detail["prix"] * $quantity;
-            $discountPrice = discountedPrice($groupPrice, $detail["discount"]);
-            $excludingTVA = priceExcludingVAT($discountPrice);
-            $deliveryPrice = priceTransport($deliveryMode, $detail["distance"]);
+            $excludingTVA = priceExcludingVAT($groupPrice);
 
             $invoice = [
                 "name" => $detail["name"],
                 "unitPrice" => $detail["prix"],
                 "quantity" => $quantity,
-                "deliveryMode" => $deliveryMode,
                 "groupPrice" => $groupPrice,
-                "discountPrice" => $discountPrice,
+                "discountPrice" => $groupPrice,
                 "excludingTVA" => $excludingTVA,
-                "TVA" => $discountPrice - $excludingTVA,
-                "deliveryPrice" => $deliveryPrice,
-                "total" => $discountPrice + $deliveryPrice,
+                "TVA" => $groupPrice - $excludingTVA,
+                "deliveryPrice" => 0,
+                "total" => $groupPrice,
             ];
             return $invoice;
         }
